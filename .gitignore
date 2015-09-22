@@ -1,0 +1,6 @@
+#classes file are ignored
+target/classes/*
+#it is a test to ignore txt file
+/target/*
+
+/target/
