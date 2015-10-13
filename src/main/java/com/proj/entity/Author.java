@@ -1,12 +1,12 @@
 package com.proj.entity;
 
 /**
-* <UserEntity>
-*		
-* @author: Administrator
-* @version: 1.0, 2015年9月22日
-*/
-public class User {
+ * <UserEntity>
+ *
+ * @author: Administrator
+ * @version: 1.0, 2015年9月22日
+ */
+public class Author {
 	private Integer	id;
 	private String	name;
 	private String	age;
@@ -75,8 +75,24 @@ public class User {
 
 
 
-	public User() {
+	public Author() {
 		super();
+		System.out.println("constructor generate...-------------------------------------------");
+	}
+
+
+
+	public Author(Integer pId, String pName) {
+		super();
+		id = pId;
+		name = pName;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "Author [id=" + id + ", name=" + name + ", age=" + age + ", addr=" + addr + ", gender=" + gender + "]";
 	}
 
 }

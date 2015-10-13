@@ -1,26 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:context="http://www.springframework.org/schema/context" xmlns:jdbc="http://www.springframework.org/schema/jdbc"  
-    xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
-    xmlns:util="http://www.springframework.org/schema/util" xmlns:task="http://www.springframework.org/schema/task" 
-    xmlns:aop="http://www.springframework.org/schema/aop"
-    xsi:schemaLocation="
-        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-        http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
-        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
-        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
-        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
-        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
-        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd"
-    default-lazy-init="true">
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <description>Spring公共配置</description>
-	
-	<!-- Activates various annotations to be detected in bean classes(隐式地向 Spring 容器注册) -->
-    <context:annotation-config />
-	<bean id="user" class="com.proj.entity.User">
+	<bean id="author" class="com.proj.entity.Author">
+		<property name="id" value="1111"/>
+	</bean> 
+	<bean id="book" class="com.proj.entity.Book">
+		 <property name="name" value="Spring IO"/>
+		 <property name="author" ref="author"/>
 	</bean>
-	
-	
+	<alias name="book" alias="book-alias-test"/>
+	<!-- factory-method -->
+	<bean id="factoryTest" 
+	      class="com.proj.util.FactoryTest" 
+	      factory-method="getInstance"/>
+	 <!-- it will be non-static factoryMethod -->
+	<bean id="facAuthor" factory-bean="factoryTest" factory-method="getAuthorInstance"/>
+	<!-- constructor by arg -->
+	<bean id="author2" class="com.proj.entity.Author">
+	 <constructor-arg type="java.lang.Integer" value="1"/>
+	 <constructor-arg type="java.lang.String" value="constructor-arg-name"/>
+	 <!-- it is equals next
+	 <constructor-arg index="0" value="1"/>
+	 <constructor-arg index="1" value="constructor-arg-name"/>
+	 it also equls next
+	 <constructor-arg name="id" value="1"/>
+	 <constructor-arg name="name" value="constructor-arg-name"/>
+	  -->
+	</bean>
 </beans>
