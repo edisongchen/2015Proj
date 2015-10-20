@@ -1,6 +1,21 @@
 #classes file are ignored
-target/classes/*
-#it is a test to ignore txt file
-/target/*
-
 /target/
+/.settings
+/doc
+/reports
+/target
+.classpath
+.project
+/.idea
+
+.myhibernatedata
+hibernate.cfg.xml
+hibernate.reveng.xml
+
+/.metadata
+/RemoteSystemsTempFiles
+/Servers
+*.iml
+.DS_Store
+.tern-project
+/bak

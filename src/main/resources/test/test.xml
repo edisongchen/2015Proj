@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+	default-lazy-init="true">
+	
+	<bean id="author" class="com.proj.entity.Author">
+		<property name="id" value="1111"/>
+	</bean> 
+	<bean id="book" class="com.proj.entity.Book">
+		 <property name="name" value="Spring IO"/>
+		 <property name="author" ref="author"/>
+	</bean>
+	<alias name="book" alias="book-alias-test"/>
+	<!-- factory-method -->
+	<bean id="factoryTest" 
+	      class="com.proj.util.FactoryTest" 
+	      factory-method="getInstance"/>
+	 <!-- it will be non-static factoryMethod -->
+	<bean id="facAuthor" factory-bean="factoryTest" factory-method="getAuthorInstance"/>
+	<!-- constructor by arg -->
+	<bean id="author2" class="com.proj.entity.Author">
+	 <constructor-arg type="java.lang.Integer" value="1"/>
+	 <constructor-arg type="java.lang.String" value="constructor-arg-name"/>
+	 <!-- it is equals next
+	 <constructor-arg index="0" value="1"/>
+	 <constructor-arg index="1" value="constructor-arg-name"/>
+	 it also equls next
+	 <constructor-arg name="id" value="1"/>
+	 <constructor-arg name="name" value="constructor-arg-name"/>
+	  -->
+	</bean>
+
+</beans>

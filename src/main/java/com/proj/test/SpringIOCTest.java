@@ -12,7 +12,7 @@ public class SpringIOCTest {
 	@Test
 	public void testGetBeanByApplicationContext(){
 		ApplicationContext ctx=new ClassPathXmlApplicationContext("applicationContext.xml");
-		Author author = ctx.getBean("author",Author.class);
+		Author author = ctx.getBean("author2",Author.class);
 		System.out.println(author);
 		Book book = ctx.getBean("book", Book.class);
 		System.out.println(book);

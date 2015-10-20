@@ -1,33 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd">
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
+        default-lazy-init="true">
+	<!-- only for test -->
+	<import resource="classpath*:test/test.xml" />
+	<!-- 读取jdbc.properties配置文件 -->
+    <context:property-placeholder location="classpath:application.properties" />
+	
+	
+	<!-- 数据源配置,使用应用内的Tomcat JDBC连接池 -->
+    <bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
+        <!-- Connection Info -->
+        <property name="driverClassName" value="${jdbc.driverClassName}" />
+        <property name="url" value="${jdbc.url}" />
+        <property name="username" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
 
-	<bean id="author" class="com.proj.entity.Author">
-		<property name="id" value="1111"/>
-	</bean> 
-	<bean id="book" class="com.proj.entity.Book">
-		 <property name="name" value="Spring IO"/>
-		 <property name="author" ref="author"/>
-	</bean>
-	<alias name="book" alias="book-alias-test"/>
-	<!-- factory-method -->
-	<bean id="factoryTest" 
-	      class="com.proj.util.FactoryTest" 
-	      factory-method="getInstance"/>
-	 <!-- it will be non-static factoryMethod -->
-	<bean id="facAuthor" factory-bean="factoryTest" factory-method="getAuthorInstance"/>
-	<!-- constructor by arg -->
-	<bean id="author2" class="com.proj.entity.Author">
-	 <constructor-arg type="java.lang.Integer" value="1"/>
-	 <constructor-arg type="java.lang.String" value="constructor-arg-name"/>
-	 <!-- it is equals next
-	 <constructor-arg index="0" value="1"/>
-	 <constructor-arg index="1" value="constructor-arg-name"/>
-	 it also equls next
-	 <constructor-arg name="id" value="1"/>
-	 <constructor-arg name="name" value="constructor-arg-name"/>
-	  -->
-	</bean>
+        <!-- Connection Pooling Info -->
+        <property name="initialSize" value="${jdbc.pool.initialSize}" />    
+        <property name="maxActive" value="${jdbc.pool.maxActive}" />
+        <property name="maxIdle" value="${jdbc.pool.maxIdle}" />
+        <property name="minIdle" value="${jdbc.pool.minIdle}" />
+        <property name="maxWait" value="${jdbc.pool.maxWait}" />
+        <property name="defaultAutoCommit" value="false" />
+        
+        <property name="validationQuery" value="select 1" />
+        <property name="testWhileIdle" value="true" />
+        <property name="testOnBorrow" value="false" />
+        <!-- default value is false -->
+        <property name="testOnReturn" value="false" />
+        <!-- The default value is 30000 (30 seconds) -->
+        <property name="validationInterval" value="180000" />
+
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="${jdbc.pool.timeBetweenEvictionRunsMillis}" />
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="${jdbc.pool.minEvictableIdleTimeMillis}" />
+    </bean>
+	
+	<!-- 扫描basePackage下所有以@MyBatisRepository注解的接口-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!-- 如果使 用了一个 以上的 DataSource ,那 么自动 装配可 能会失效 。使用 sqlSessionFactoryBeanName来设置正确的 bean名 称。 -->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+        <property name="basePackage" value="com.proj.dao.mybatis" />
+        <property name="annotationClass" value="com.proj.common.persistence.annotation.MyBatisRepository"/>
+    </bean>
+	<!-- MyBatis配置 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <!-- 自动扫描entity目录, 省掉Configuration.xml里的手工配置 -->
+        <property name="typeAliasesPackage" value="com.proj.entity" />
+        <!-- 后期考虑baseEntity -->
+        <!-- <property name="typeAliasesSuperType" value="com.actec.nms.accipiter.common.persistence.BaseEntity"/> -->
+        <!-- 显式指定Mapper文件位置 -->
+        <property name="mapperLocations" value="classpath:/mybatis/**/*.xml"/>
+        <property name="configLocation" value="classpath:mybatis-config.xml" />
+    </bean>
 </beans>

@@ -1,11 +1,14 @@
 package com.proj.entity;
 
+import org.apache.ibatis.type.Alias;
+
 /**
  * <UserEntity>
  *
  * @author: Administrator
  * @version: 1.0, 2015年9月22日
  */
+@Alias("author2")
 public class Author {
 	private Integer	id;
 	private String	name;
