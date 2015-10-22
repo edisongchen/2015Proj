@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace must point to a interface  -->
+<mapper namespace="com.proj.dao.mybatis.IUserDao">
+	<!-- the type can abridged packageName,cause the spring will scan base package
+		by config context-component scan,and default the name are the class name,if
+		you want to change it use @Alias annotation,but config it such as
+		<property name="typeAliasesPackage" value="com.proj.entity"/> in sqlSessionFactory?
+	 -->
+	<select id="findAll" parameterType="User" resultMap="userMap">
+		select id,nick_name,login_name,pass_word from test_user
+	</select>
+	
+	<resultMap id="userMap" type="User">
+		<id property="id" column="id"/>
+		<result property="nickName" column="nick_name"/>
+		<result property="loginName" column="login_name"/>
+		<result property="password" column="pass_word"/>
+	</resultMap>
+	
+</mapper> 

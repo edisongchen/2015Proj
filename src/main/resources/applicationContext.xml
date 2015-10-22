@@ -2,15 +2,19 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd"
         default-lazy-init="true">
+	 <!-- Activates various annotations to be detected in bean classes(隐式地向 Spring 容器注册)eg:@Controller,@Autowired... -->
+    <context:annotation-config />
 	<!-- only for test -->
 	<import resource="classpath*:test/test.xml" />
 	<!-- 读取jdbc.properties配置文件 -->
     <context:property-placeholder location="classpath:application.properties" />
-	
-	
+    <!-- 基本bean 扫描路径 -->
+	<context:component-scan base-package="com.proj" />
 	<!-- 数据源配置,使用应用内的Tomcat JDBC连接池 -->
     <bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
         <!-- Connection Info -->
@@ -20,7 +24,7 @@
         <property name="password" value="${jdbc.password}" />
 
         <!-- Connection Pooling Info -->
-        <property name="initialSize" value="${jdbc.pool.initialSize}" />    
+        <property name="initialSize" value="${jdbc.pool.initialSize}" />
         <property name="maxActive" value="${jdbc.pool.maxActive}" />
         <property name="maxIdle" value="${jdbc.pool.maxIdle}" />
         <property name="minIdle" value="${jdbc.pool.minIdle}" />
@@ -41,22 +45,23 @@
         <property name="minEvictableIdleTimeMillis" value="${jdbc.pool.minEvictableIdleTimeMillis}" />
     </bean>
 	
-	<!-- 扫描basePackage下所有以@MyBatisRepository注解的接口-->
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <!-- 如果使 用了一个 以上的 DataSource ,那 么自动 装配可 能会失效 。使用 sqlSessionFactoryBeanName来设置正确的 bean名 称。 -->
-        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
-        <property name="basePackage" value="com.proj.dao.mybatis" />
-        <property name="annotationClass" value="com.proj.common.persistence.annotation.MyBatisRepository"/>
-    </bean>
+	
 	<!-- MyBatis配置 -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
-        <!-- 自动扫描entity目录, 省掉Configuration.xml里的手工配置 -->
+        <!-- 自动扫描entity目录, @Alias-->
         <property name="typeAliasesPackage" value="com.proj.entity" />
         <!-- 后期考虑baseEntity -->
         <!-- <property name="typeAliasesSuperType" value="com.actec.nms.accipiter.common.persistence.BaseEntity"/> -->
         <!-- 显式指定Mapper文件位置 -->
         <property name="mapperLocations" value="classpath:/mybatis/**/*.xml"/>
         <property name="configLocation" value="classpath:mybatis-config.xml" />
+    </bean>
+    <!-- 扫描basePackage下所有以@MyBatisRepository注解的接口-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!-- 如果使 用了一个 以上的 DataSource ,那 么自动 装配可 能会失效 。使用 sqlSessionFactoryBeanName来设置正确的 bean名 称。 -->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+        <property name="basePackage" value="com.proj.dao.mybatis" />
+        <property name="annotationClass" value="com.proj.common.persistence.annotation.MyBatisRepository"/>
     </bean>
 </beans>
