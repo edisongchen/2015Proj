@@ -1,7 +1,7 @@
 package com.proj.entity;
 
 import org.apache.ibatis.type.Alias;
-@Alias("user2")
+//@Alias("user2")
 public class User {
 	private String id;
 	private String nickName;

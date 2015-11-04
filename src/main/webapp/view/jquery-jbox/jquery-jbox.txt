@@ -1,0 +1,8 @@
+1,版本信息:jquery jbox 2.3   
+refrences:http://www.jjsp.gov.cn:8888/js/jbox-v2.3/jbox-demo2.html
+函数原型：$.jBox(content,options);
+        --content:string或json,当为json时,需要加上前缀标识(html:、id:、
+         get:、post:、iframe:、)如果没加,默认是html.当是json时,表示一个或
+                       多个状态,每个状态的默认值为$.jBox.stateDefaults.
+        --options[可选参数](json)
+            	其它参数选项,缺醒值$.jBox.defaults

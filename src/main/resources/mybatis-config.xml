@@ -24,6 +24,7 @@
 	<!-- 类型别名 -->
     <typeAliases>
         <!-- <typeAlias alias="Page" type="com.actec.nms.accipiter.common.persistence.Page" /> -->
+        <!-- 指定一个包名,myBatis会搜索下面的Java bean -->
         <package name="com.proj.entity" />
     </typeAliases>
     
