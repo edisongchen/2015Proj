@@ -14,7 +14,15 @@
 	$(document).ready(function (){
 		$("#jbox1").click(function (){
 			console.log('jbox1.click/////');
-			$.jBox('ccc',{title:'test jquery jbox2.3',bottomText:'testbuttom text'});
+			$.jBox('html:test',
+					{title:'test jquery jbox2.3',
+					 border:1,
+					 bottomText:'testbuttom text',
+					 //timeout:3000,
+					 showType:'slide',
+					 buttons:{'bt1':'b1','bt2':'b2','bt3':'b3'},
+					 buttonsFocus:1
+					 });
 		});
 		$("#jbox2").click(function (){
 			var info = 'jQuery jBox<br /><br />版本：v2.0<br />日期：2011-7-24<br />';
@@ -33,6 +41,57 @@
 			    buttons: { '关闭': true }
 			});
 		});
+		$("#jbox5").click(function(){
+			var content = {
+			    state1: {
+			        content: '状态一'+"<input type='text'/>",
+			        buttons: { '下一步': 1, '取消': 0 },
+			        buttonsFocus: 0,
+			        submit: function (v, h, f) {
+			            if (v == 0) {
+			            	return true;
+			            }// close the window}
+			            else {
+			            	$.jBox.nextState(); //go forward// 或 $.jBox.goToState('state2')
+			            }
+			            return false;
+			        }
+			    },
+			    state2: {
+			        content: '状态二，请关闭窗口哇：）',
+			        buttons: { '上一步': 1, '取消': 0 },
+			        buttonsFocus: 0,
+			        submit: function (v, h, f) {
+			            if (v == 0) {
+			                return true; // close the window
+			            } else {
+			                $.jBox.prevState() //go back
+			                // 或 $.jBox.goToState('state1');
+			            }
+			            return false;
+			        }
+			    }
+			};
+			$.jBox(content,{title:'state-next'});
+		});
+		
+		$("#jbox6").click(function (){
+			var html = "<div style='padding:10px;'>输入姓名：<input type='text' id='yourname' name='yourname' /></div>";
+			var submit = function (v, h, f) {
+				/* 点击状态按钮后的回调函数，返回true时表示关闭窗口，参数有三个，v表示所点的按钮的返回值，
+				 * h表示窗口内容的jQuery对象，f表示窗口内容里的form表单键值 
+				 */
+				if (f.yourname == '') {//找的是name
+			        $.jBox.tip("请输入您的姓名。", 'error', { focusId: "yourname" }); // 关闭设置 yourname 为焦点
+			        return false;
+			    }
+			    $.jBox.tip("你叫：" + h.find("#yourname").val());
+			    //$.jBox.tip("你叫：" + h.find(":input[name='yourname']").val());
+			    return true;
+			};
+			$.jBox(html, {id:'111' , title: "你叫什么名字？", submit: submit });
+		});
+		
 	});
 </script>
 
@@ -43,6 +102,8 @@
 	<div id="jbox2">jbox info</div>
 	<div id="jbox3">jbox get</div>
 	<div id="jbox4">jbox frame</div>
+	<div id="jbox5">jbox nextState</div>
+	<div id="jbox6">jbox print tip</div>
 </div>
 </body>
 </html>
