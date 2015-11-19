@@ -19,7 +19,7 @@
 		<shiro.version>1.2.3</shiro.version>
 		<aspectj.version>1.8.0</aspectj.version>
 		<cxf.version>3.1.1</cxf.version>
-		<quartz.version>2.2.1</quartz.version>
+		<quartz.version>2.2.2</quartz.version>
 		<ehcache.version>2.6.9</ehcache.version>
 		<sitemesh.version>2.4.2</sitemesh.version>
 		<spymemcached.version>2.11.2</spymemcached.version>
@@ -432,7 +432,12 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		
+		<!-- quartz-jobs -->
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz-jobs</artifactId>
+			<version>2.2.2</version>
+		</dependency>
 		<!-- CACHE begin -->
 		<!-- memcached -->
 		<dependency>
@@ -720,6 +725,5 @@
             <scope>test</scope>
         </dependency>
 		<!-- TEST end -->
-		
 </dependencies>
 </project>

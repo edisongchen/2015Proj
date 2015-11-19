@@ -64,4 +64,7 @@
         <property name="basePackage" value="com.proj.dao.mybatis" />
         <property name="annotationClass" value="com.proj.common.persistence.annotation.MyBatisRepository"/>
     </bean>
+    
+    <!-- import quartz -->
+	<import resource="classpath*:task/quartz-task.xml" />
 </beans>
