@@ -25,7 +25,7 @@ public class CronTriggerDemo {
 			//job1
 			JobDetail job = newJob(SimpleJob.class)//JobBuilder.newJob(Class<? extends Job> jobClass)
 					.withIdentity("job1","group1")//JobBuilder.withIdentity(String name, String group)
-					.build();//return JobDetail
+					.build();//return JobDetail 
 			CronTrigger trigger =newTrigger()
 					.withIdentity("trigger1", "group1")
 					.withSchedule(cronSchedule("0/10 * * * * ?"))
