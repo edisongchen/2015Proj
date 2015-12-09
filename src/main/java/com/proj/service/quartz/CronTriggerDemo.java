@@ -43,11 +43,11 @@ public class CronTriggerDemo {
 			
 			
 			sched.start();
-			Thread.sleep(30*1000L);
-			sched.shutdown();
+			//Thread.sleep(30*1000L);
+			//sched.shutdown();
 		} catch (SchedulerException e) {
 			e.printStackTrace();
-		} catch (InterruptedException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
