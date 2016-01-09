@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 日志输出规则  根据当前ROOT 级别，日志输出时，级别高于root默认的级别时  会输出  -->
+<!-- 以下  每个配置的 filter 是过滤掉输出文件里面，会出现高级别文件，依然出现低级别的日志信息，通过filter 过滤只记录本级别的日志  -->
+<!-- 日志级别：从高到地低 OFF、FATAL、 ERROR、WARN、INFO、DEBUG、TRACE、 ALL -->
+
+<configuration>
+	<!-- 定义变量的标签,两个属性name,value 通过property定义的值会被插入到logger上下文中
+	使用${}来使用变量-->
+	<property name="log_dir" value="E:/log"/>
+	<!-- key标识此timestamp的名字，datePattern设置当前时间 -->
+	<timestamp key="bySecond" datePattern="yyyyMMdd 'T'HHmmss"/>
+	
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<!-- encoder默认设置为PatternLayoutEncoder -->
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+	
+	<!-- 设置loger 设置某一个包或者具体某个类的日志打印级别,以及指定appender,loger只有name属性一个可选
+	的level和addtivity属性是否向上级loger传递打印信息。默认是true。
+	loger可以包含*个appender-ref元素，标识这个appender将会添加到这个loger -->
+	<logger name="com.proj.test" level="INFO"></logger>
+	
+	<logger name="com.proj.test.log.LogbackTest" level="INFO" additivity="false">
+		<appender-ref ref="STDOUT" />
+	</logger>
+	
+	
+	<!-- root也是loger元素，只有一个level属性，TRACE,DEBUG,INFO,WARN,ERROR,ALL,OFF
+	但不能设置INHERITED或同义词NULL，可以包含*个appender-ref -->
+	<root level="DEBUG">
+		<appender-ref ref="STDOUT" />
+	</root>
+</configuration>
