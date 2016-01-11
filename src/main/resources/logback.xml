@@ -9,27 +9,107 @@
 	<property name="log_dir" value="E:/log"/>
 	<!-- key标识此timestamp的名字，datePattern设置当前时间 -->
 	<timestamp key="bySecond" datePattern="yyyyMMdd 'T'HHmmss"/>
+	<!-- 日志最大的历史 30天 -->
+    <property name="maxHistory" value="30"/>
+    <!-- 文件编码 -->
+    <property name="charset" value="UTF-8"/>
+    
+	<appender name="DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		 <!-- 过滤器，只记录DEBUG级别的日志 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 按天回滚 daily -->
+            <fileNamePattern>${log_dir}/%d{yyyy-MM-dd}/all_debug.log</fileNamePattern>
+            <maxHistory>${maxHistory}</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <!-- <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern> -->
+            <pattern>%d{yyyy-MM-dd-HH:mm:ss} [%thread] %-5level %logger{30} %caller{1} - %msg%n %rEx</pattern>
+            <charset>${charset}</charset>
+        </encoder>
+	</appender>
 	
-	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-		<!-- encoder默认设置为PatternLayoutEncoder -->
-		<encoder>
-			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
-		</encoder>
+	<appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		 <!-- 过滤器，只记录INFO级别的日志 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 按天回滚 daily -->
+            <fileNamePattern>${log_dir}/%d{yyyy-MM-dd}/all_info.log</fileNamePattern>
+            <maxHistory>${maxHistory}</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <!-- <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern> -->
+            <pattern>%d{yyyy-MM-dd-HH:mm:ss} [%thread] %-5level %logger{20} %caller{1} - %msg%n %rEx</pattern>
+            <charset>${charset}</charset>
+        </encoder>
+	</appender>
+	<appender name="WARN" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		 <!-- 过滤器，只记录WARN级别的日志 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 按天回滚 daily -->
+            <fileNamePattern>${log_dir}/%d{yyyy-MM-dd}/test.log</fileNamePattern>
+            <maxHistory>${maxHistory}</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <!-- <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern> -->
+            <pattern>%d{yyyy-MM-dd-HH:mm:ss} [%thread] %-5level %logger{30} %caller{1} - %msg%n %rEx</pattern>
+            <charset>${charset}</charset>
+        </encoder>
+	</appender>
+	<appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		 <!-- 过滤器，只记录ERROR级别的日志 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 按天回滚 daily -->
+            <fileNamePattern>${log_dir}/%d{yyyy-MM-dd}/all_error.log</fileNamePattern>
+            <maxHistory>${maxHistory}</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <!-- <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern> -->
+            <pattern>%d{yyyy-MM-dd-HH:mm:ss} [%thread] %-5level %logger{30} %caller{1} - %msg%n %rEx</pattern>
+            <charset>${charset}</charset>
+        </encoder>
+	</appender>
+	
+	<!-- Test日志 -->
+	<appender name="test" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd-HH:mm:ss} [%thread] %-5level %logger{30} - %msg%n</pattern>
+            <charset>${charset}</charset>
+        </encoder>
 	</appender>
 	
 	<!-- 设置loger 设置某一个包或者具体某个类的日志打印级别,以及指定appender,loger只有name属性一个可选
 	的level和addtivity属性是否向上级loger传递打印信息。默认是true。
 	loger可以包含*个appender-ref元素，标识这个appender将会添加到这个loger -->
-	<logger name="com.proj.test" level="INFO"></logger>
-	
-	<logger name="com.proj.test.log.LogbackTest" level="INFO" additivity="false">
-		<appender-ref ref="STDOUT" />
+	<logger name="com.proj.test" level="DEBUG" additivity="true">
+		<appender-ref ref="test" />
 	</logger>
 	
 	
 	<!-- root也是loger元素，只有一个level属性，TRACE,DEBUG,INFO,WARN,ERROR,ALL,OFF
 	但不能设置INHERITED或同义词NULL，可以包含*个appender-ref -->
-	<root level="DEBUG">
-		<appender-ref ref="STDOUT" />
+	<root>
+		<appender-ref ref="DEBUG" />
+		<appender-ref ref="INFO" />
+		<appender-ref ref="WARN" />
+		<appender-ref ref="ERROR" />
 	</root>
 </configuration>
