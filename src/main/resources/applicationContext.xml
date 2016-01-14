@@ -10,7 +10,7 @@
 	 <!-- Activates various annotations to be detected in bean classes(隐式地向 Spring 容器注册)eg:@Controller,@Autowired... -->
     <context:annotation-config />
 	<!-- only for test -->
-	<import resource="classpath*:test/test.xml" />
+	<!-- <import resource="classpath*:test/test.xml" /> -->
 	<!-- 读取jdbc.properties配置文件 -->
     <context:property-placeholder location="classpath:application.properties" />
     <!-- 基本bean 扫描路径 -->
@@ -58,13 +58,13 @@
         <property name="configLocation" value="classpath:mybatis-config.xml" />
     </bean>
     <!-- 扫描basePackage下所有以@MyBatisRepository注解的接口-->
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    <bean id="mapperScannerConfigurer"  class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <!-- 如果使 用了一个 以上的 DataSource ,那 么自动 装配可 能会失效 。使用 sqlSessionFactoryBeanName来设置正确的 bean名 称。 -->
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
-        <property name="basePackage" value="com.proj.dao.mybatis" />
+        <property name="basePackage" value="com.proj" />
         <property name="annotationClass" value="com.proj.common.persistence.annotation.MyBatisRepository"/>
     </bean>
     
     <!-- import quartz -->
-	<import resource="classpath*:task/quartz-task.xml" />
+	<!-- <import resource="classpath*:task/quartz-task.xml" /> -->
 </beans>

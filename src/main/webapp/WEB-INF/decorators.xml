@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<decorators defaultdir="/WEB-INF/views">
+    <!-- sitemesh装饰模板后，所有html页面，只有有中文都会出现乱码问题，导致页面加载超级慢，或直接就报错了。  -->
+    <excludes>
+        <pattern>/mobile/*</pattern>
+        <pattern>/static/*</pattern>
+    </excludes>
+	
+	<!-- 默认装饰页面, 在需要装饰的页面增加<meta name="decorator" content="default"/> -->
+	<decorator name="default" page="layouts/default.jsp" />
+	
+</decorators>
