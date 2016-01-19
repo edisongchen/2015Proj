@@ -576,7 +576,11 @@
 			<version>1.1.4</version>
 		</dependency>
 		<!-- XML end -->
-		
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-all</artifactId>
+			<version>${apache.netty}</version>
+		</dependency>
 		<!-- LOGGING begin -->
 		<!-- slf4j -->
 		<dependency>

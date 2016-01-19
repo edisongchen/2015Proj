@@ -1,0 +1,13 @@
+下载JRebel6.0.3的破解文件
+首先从网上下载：jrebel_6.0.3-agent-crack.zip，并解压。下载地址:  http://pan.baidu.com/s/1eQnJmvw 
+ 提取密码: c9gt
+安装eclipse的JRebel6.0.3的插件
+我使用的是eclipse4.4.2，安装插件跟安装其它插件无异。
+插件更新地址为： http://update.zeroturnaround.com/update-site-archive/update-site-6.0.3.RELEASE/ 。
+破解插件
+我们把jrebel_6.0.3-agent-crack.zip解压，取出子目录lib下的  jrebel.jar 与 jrebel.lic 。
+把这两个文件复盖到eclipse安装目录下的plugins\org.zeroturnaround.eclipse.embedder_6.0.3.RELEASE-201501271431文件夹下的所有的有jrebel.jar的子文件夹里，
+然后重启eclipse即可确解。
+
+--这种方式改了类后会重新publish，期间服务器不能响应请求。
+还有另一种需要配置参数的方式...TODO
