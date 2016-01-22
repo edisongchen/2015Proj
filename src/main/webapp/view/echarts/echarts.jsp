@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>first echarts demo</title>
 <style type="text/css">
-.style1{width:500px;height:400px;border:1px solid red;float:left;}
+.style1{min-width:600px;height:400px;border:1px solid red;float:left;}
 </style>
 </head>
 <body>
@@ -15,6 +15,7 @@
 		<a href="#" onclick="show_dyn_data()">click dyn</a>
 		<a href="#" onclick="show_pie()">click pie</a>
 		<a href="#" onclick="show_bar()">click bar</a>
+		<a href="#" onclick="stop()">click stop</a>
 	</li>
 	<div id="pie-chart" class="style1">
 		

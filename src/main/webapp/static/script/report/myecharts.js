@@ -7,7 +7,7 @@ $(function() {
         }
     });
 });
-
+var timeTicket;
 function show_dyn_data(){
 	var option = {
 		    title : {
@@ -18,43 +18,40 @@ function show_dyn_data(){
 		        trigger: 'axis'
 		    },
 		    legend: {
-		        data:['最新成交价']
+		        data:['test1','test2','test3']
 		    },
-		    toolbox: {
-		        show : true,
-		        feature : {
-		            mark : {show: true},
-		            dataView : {show: true, readOnly: false},
-		            magicType : {show: true, type: ['line', 'bar']},
-		            restore : {show: true},
-		            saveAsImage : {show: true}
-		        }
-		    },
-		    dataZoom : {
+		    /*dataZoom : {
 		        show : false,
 		        start : 0,
 		        end : 100
-		    },
+		    },*/
 		    xAxis : [
 		        {
 		            type : 'category',
 		            boundaryGap : true,
-		            data : [1,2,3,5,6,7,8,9,10]
+		            data : [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
 		        }
 		    ],
 		    yAxis : [
 		        {
-		        	type:'value',
-		        	min:0,
-		        	max:20
+		        	type:'value'
 		        }
 		    ],
 		    series : [
-		        
 		        {
-		            name:'最新成交价',
+		            name:'test1',
 		            type:'line',
-		            data:[1,2,3,4,5,6,7,8,9,10]
+		            data:[0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0]
+		        },
+		        {
+		            name:'test2',
+		            type:'line',
+		            data:[0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0]
+		        },
+		        {
+		            name:'test3',
+		            type:'line',
+		            data:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,9]
 		        }
 		    ]
 		};
@@ -68,30 +65,56 @@ function show_dyn_data(){
 				     ],
 					 function (ec) {
 					     var myChart = ec.init(document.getElementById('dyn-chart'));
-					     var lastData = 11;
-							var axisData;
-							clearInterval(timeTicket);
-							var timeTicket = setInterval(function (){
-							    lastData += Math.random() * ((Math.round(Math.random() * 10) % 2) == 0 ? 1 : -1);
-							    lastData = lastData.toFixed(1) - 0;
-							    console.log("ld:"+lastData);
-//							    axisData = (new Date()).toLocaleTimeString().replace(/^\D*/,'');
-							    axisData = Math.floor(Math.random()*10);
-							    console.log('xaxis:'+axisData);
+					     if(timeTicket){
+					    	 clearInterval(timeTicket);
+					     }
+							 timeTicket = setInterval(function (){
+								var now = new Date();
 							    // 动态数据接口 addData
-							    myChart.addData([
-							        [
-							            0,        // 系列索引
-							            lastData, // 新增数据
-							            false,    // 新增数据是否从队列头部插入
-							            false,    // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
-							            axisData  // 坐标轴标签
-							        ]
-							    ]);
-							}, 4000);
-					     myChart.setOption(option);
+								for(var i=0;i<3;i++){
+									var axisData=now.getHours()+":"+now.getMinutes()+":"+now.getSeconds()+"-"+i;
+									console.log("axisData:"+axisData);
+									myChart.addData([
+									                 [
+									                  0,        // 系列索引
+									                  Math.floor(Math.random()*10), // 新增数据
+									                  false,    // 新增数据是否从队列头部插入
+									                  false,    // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+									                  ],
+									                  [
+									                   1,        // 系列索引
+									                   Math.floor(Math.random()*20), // 新增数据
+									                   false,    // 新增数据是否从队列头部插入
+									                   false,    // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+									                   ],
+									                   [
+														 2,        // 系列索引
+														 (-1)*Math.floor(Math.random()*20), // 新增数据
+														 false,    // 新增数据是否从队列头部插入
+														 false,    // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+														 axisData  // 坐标轴标签
+														]
+									                 ]);
+									/*myChart.adddData([
+														[
+														 2,        // 系列索引
+														 Math.floor(Math.random()*20), // 新增数据
+														 false,    // 新增数据是否从队列头部插入
+														 false,    // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+														 axisData  // 坐标轴标签
+														]  
+									                 ]);*/
+								}
+							    
+							    
+							}, 5000);
+							myChart.setOption(option);
 					 }
 				);
+}
+
+function stop(){
+	clearInterval(timeTicket);
 }
 
 function show_pie(){
@@ -212,17 +235,6 @@ function show_bar(){
 		            name:'降水量',
 		            type:'line',
 		            data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3],
-		            /* markPoint : {
-		                data : [
-		                    {name : '年最高', value : 182.2, xAxis: 7, yAxis: 183, symbolSize:18},
-		                    {name : '年最低', value : 2.3, xAxis: 11, yAxis: 3}
-		                ]
-		            },
-		            markLine : {
-		                data : [
-		                    {type : 'average', name : '平均值'}
-		                ]
-		            }*/
 		        }
 		    ]
 		};
