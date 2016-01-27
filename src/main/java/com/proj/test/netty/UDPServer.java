@@ -1,7 +1,5 @@
 package com.proj.test.netty;
 
-import java.util.Map;
-
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelOption;
