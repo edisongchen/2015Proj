@@ -99,7 +99,7 @@ private byte[] buffer = new byte[1024];
     public static void main(String[] args) throws Exception {    
     	UDPClient client = new UDPClient();
         String serverHost = "127.0.0.1";
-        int serverPort = 9999;
+        int serverPort = 9090;
         client.send(serverHost, serverPort, ("123456789").getBytes());
         String info = client.receive(serverHost, serverPort);    
         System.out.println("服务端回应数据：" + info);
