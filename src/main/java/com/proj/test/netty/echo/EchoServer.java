@@ -49,7 +49,8 @@ public class EchoServer {
 			@Override
 			protected void initChannel(SocketChannel ch) throws Exception {
 				//添加Handler到Channel的pipeline
-				ch.pipeline().addLast(new EchoServerHandler());
+				ch.pipeline().addLast(new EchoServerHandler()).addLast(new EchoServerHandler2());
+				//.addLast(new EchoServerHandler2())
 			}
 			
 		});
