@@ -123,13 +123,13 @@
 	</filter-mapping>
 	  <servlet>
 	    <servlet-name>JsonRpcServerServlet</servlet-name>
-	    <servlet-class>com.service.jsonrequest.ServiceJsonRpcServlet</servlet-class>
+	    <servlet-class>com.proj.test.jsonrpc.ServiceJsonRpcServlet</servlet-class>
 	    <load-on-startup>10</load-on-startup>
 	  </servlet>
 	
 	  <servlet-mapping>
 	    <servlet-name>JsonRpcServerServlet</servlet-name>
-	    <url-pattern>/json-Rpc</url-pattern>
+	    <url-pattern>/jsonrpc</url-pattern>
 	  </servlet-mapping>
 	<!-- Spring MVC Servlet -->
 	<servlet>

@@ -67,4 +67,6 @@
     
     <!-- import quartz -->
 	<!-- <import resource="classpath*:task/quartz-task.xml" /> -->
+	<!-- import jsonRPC.xml -->
+	<import resource="classpath*:jsonrpc.xml" />
 </beans>

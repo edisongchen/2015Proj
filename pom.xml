@@ -557,6 +557,13 @@
 		<!-- JSON end -->
 		<!-- jsonRPC For java -->
 		<dependency>
+		     <groupId>javax.portlet</groupId>
+		     <artifactId>portlet-api</artifactId>
+		     <version>2.0</version>
+		     <optional>true</optional>
+		     <scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>com.github.briandilley.jsonrpc4j</groupId>
 			<artifactId>jsonrpc4j</artifactId>
 			<version>${jsonrpc4j.version}</version>
