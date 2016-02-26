@@ -67,6 +67,6 @@
     
     <!-- import quartz -->
 	<!-- <import resource="classpath*:task/quartz-task.xml" /> -->
-	<!-- import jsonRPC.xml -->
-	<import resource="classpath*:jsonrpc.xml" />
+	<!-- 扫描JsonRpcService 注解 -->
+	<bean class="com.googlecode.jsonrpc4j.spring.AutoJsonRpcServiceExporter"/>
 </beans>
