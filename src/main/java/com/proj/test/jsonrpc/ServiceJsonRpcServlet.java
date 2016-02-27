@@ -26,7 +26,7 @@ public class ServiceJsonRpcServlet extends HttpServlet{
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
 		System.out.println("init....");
-		rpcService = new JsonRpcServer(new UserServiceImpl(),UserService.class);
+		rpcService = new JsonRpcServer(new UserServiceTestImpl(),UserTestService.class);
 	}
 
 	@Override

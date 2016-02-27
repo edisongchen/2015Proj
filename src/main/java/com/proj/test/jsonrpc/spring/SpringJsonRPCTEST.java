@@ -27,6 +27,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.googlecode.jsonrpc4j.JsonRpcHttpClient;
 import com.googlecode.jsonrpc4j.spring.JsonServiceExporter;
+import com.proj.entity.jsonrpc.JsonRpc;
 import com.proj.test.jsonrpc.User;
 import com.thoughtworks.xstream.mapper.Mapper.Null;
 
@@ -141,5 +142,33 @@ public class SpringJsonRPCTEST {
 		System.out.println(client.invoke("testListParam", new Object[]{list}, Object.class));
 		User response = client.invoke("createUser", paramMap, User.class);
 		System.out.println(response);
+	}
+	
+	@Test
+	public void testException (){
+		try {
+			String response = client.invoke("getUser", null, String.class);
+			System.out.println(response);
+		} catch (Throwable e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testServiceImpl (){
+		try {
+			JsonRpcHttpClient client = new JsonRpcHttpClient(new URL("http://127.0.0.1:8080/WEBDemo/rpc/user/getInfo"));
+			JsonRpc jsonRpc = new JsonRpc();
+			jsonRpc.setId("111");
+			jsonRpc.setMethod("getUserById"); 
+			Map<String, Object> userMap = Maps.newHashMap();
+			userMap.put("id", "1");
+			jsonRpc.setParams(userMap);
+			String response = client.invoke("getUserById", new Object[]{jsonRpc}, String.class);
+			System.out.println(response);
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
 	}
 }

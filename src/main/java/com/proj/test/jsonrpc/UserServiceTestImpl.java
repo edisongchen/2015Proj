@@ -3,12 +3,10 @@
  */
 package com.proj.test.jsonrpc;
 
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.proj.common.mapper.JsonMapper;
 
@@ -18,7 +16,7 @@ import com.proj.common.mapper.JsonMapper;
  * @date 2016年2月25日
  */
 @Component
-public class UserServiceImpl implements UserService{
+public class UserServiceTestImpl implements UserTestService{
 
 	public User createUser(String userName, String firstName, String password) {
         User user = new User();

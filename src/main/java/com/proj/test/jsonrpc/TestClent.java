@@ -28,7 +28,7 @@ public class TestClent {
         JsonRpcHttpClient client;
         try {
             //实例化请求地址，注意服务端web.xml中地址的配置
-            client = new JsonRpcHttpClient(new URL("http://127.0.0.1:8080/json-Rpc"));
+            client = new JsonRpcHttpClient(new URL("http://127.0.0.1:8080/WEBDemojsonrpc"));
         } catch (MalformedURLException e) {
             e.printStackTrace();
             return list;

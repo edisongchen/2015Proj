@@ -10,8 +10,7 @@ import com.googlecode.jsonrpc4j.JsonRpcService;
  * @author ctg
  * @date 2016年2月25日
  */
-//@JsonRpcService("/MyService")
-public interface UserService {
+public interface UserTestService {
 	User createUser(String userName, String firstName, String password);
 	String createUser();
     User findUserByUserName(String userName);

@@ -33,8 +33,6 @@ public class TestServlet {
 			return;//return
 		}
 		try {
-			System.out.println("id:"+request.getHeader("id"));
-			System.out.println("jsonrpc:"+request.getHeader("jsonrpc"));
 			myService.handleRequest(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
