@@ -30,6 +30,7 @@ public class TestServlet {
 	@ResponseBody
 	public void test2(HttpServletRequest request,HttpServletResponse response) {
 		if (myService == null) {
+			System.out.println("JSONServiceExporter null");
 			return;//return
 		}
 		try {

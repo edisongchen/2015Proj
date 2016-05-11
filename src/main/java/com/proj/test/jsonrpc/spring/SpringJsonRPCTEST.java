@@ -28,7 +28,7 @@ import com.google.common.collect.Maps;
 import com.googlecode.jsonrpc4j.JsonRpcHttpClient;
 import com.googlecode.jsonrpc4j.spring.JsonServiceExporter;
 import com.proj.entity.jsonrpc.JsonRpc;
-import com.proj.test.jsonrpc.User;
+import com.proj.entity.jsonrpc.User;
 import com.thoughtworks.xstream.mapper.Mapper.Null;
 
 /**
@@ -57,48 +57,25 @@ public class SpringJsonRPCTEST {
 	
 	
 	@Test
-	public void test2() throws Throwable{
-		JsonRpcHttpClient client 
-	        = new JsonRpcHttpClient(new URL("http://127.0.0.1:8080/WEBDemo/jsonrpc"));
-		Map<String,String> headers = new HashMap<String,String>();
-		
-		headers.put("name", "123");
-		
-		client.setHeaders(headers);
-		
-		String properties = client.invoke("createUser", null, String.class);
-		
-		System.out.println("result:"+properties);
-	}
-	@Test
 	public void testSpring() {
 		
-		String properties;
+		String response;
 		try {
 			 Map<String,String> headers = new HashMap<String,String>();
 			 headers.put("jsonrpc", "2.0");
 			 headers.put("id", UUID.randomUUID().toString());
 			 client.setHeaders(headers);
-			properties = client.invoke("getUser", new Object[]{""}, String.class);
-			client.writeRequest("getUser", null, baos, "1");
-			String request = baos.toString("UTF-8");
-			System.out.println("request:"+request);
+			 response = client.invoke("getUser", new Object[]{""}, String.class);
+//			client.writeRequest("getUser", null, baos, "1");
+//			String request = baos.toString("UTF-8");
+//			System.out.println("request:"+request);
 			
-			System.out.println(properties);
+			System.out.println("response:"+response);
 			
 		} catch (Throwable e) {
 			System.out.println(e.getMessage());
 		}
 	}
-	
-	@Test
-	public void testAPPLICATION(){
-		ApplicationContext ctx = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
-		 Object bean = ctx.getBean("/MyService");
-		// System.out.println(bean instanceof JsonServiceExporter);
-		 assertSame(JsonServiceExporter.class, bean.getClass());
-	}
-	
 	
 	@Test
 	public void testBeanParam() throws Throwable{
@@ -108,7 +85,7 @@ public class SpringJsonRPCTEST {
 		paramMap.put("firstName", "22");
 		String response 
 		   = client.invoke("testBeanParam", new Object[]{paramMap}, String.class);
-		System.out.println(response);
+		System.out.println("response:"+response);
 	}
 	
 	@Test
@@ -155,20 +132,4 @@ public class SpringJsonRPCTEST {
 		}
 	}
 	
-	@Test
-	public void testServiceImpl (){
-		try {
-			JsonRpcHttpClient client = new JsonRpcHttpClient(new URL("http://127.0.0.1:8080/WEBDemo/rpc/user/getInfo"));
-			JsonRpc jsonRpc = new JsonRpc();
-			jsonRpc.setId("111");
-			jsonRpc.setMethod("getUserById"); 
-			Map<String, Object> userMap = Maps.newHashMap();
-			userMap.put("id", "1");
-			jsonRpc.setParams(userMap);
-			String response = client.invoke("getUserById", new Object[]{jsonRpc}, String.class);
-			System.out.println(response);
-		} catch (Throwable e) {
-			e.printStackTrace();
-		}
-	}
 }

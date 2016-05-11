@@ -5,13 +5,14 @@ package com.proj.test.jsonrpc.spring;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Maps;
 import com.proj.common.mapper.JsonMapper;
-import com.proj.test.jsonrpc.User;
+import com.proj.entity.jsonrpc.User;
 
 /**
  * 
@@ -27,7 +28,7 @@ public class MyServiceImpl implements MyService{
 		Map<String, Object> ret = Maps.newHashMap();
     	ret.put("id", "1");
     	ret.put("result", "success1");
-    	ret.put("jsonrpc","1.1");
+    	ret.put("jsonrpc","1.2");
     	return mapper.toJson(ret);
 	}
 	
@@ -35,9 +36,9 @@ public class MyServiceImpl implements MyService{
 	public String getUser(String name) {
 		Map<String, Object> ret = Maps.newHashMap();
     	ret.put("id", "1");
-    	ret.put("result", "success2");
-    	ret.put("jsonrpc","1.1");
-    	System.out.println(JsonMapper.getInstance().toJson(ret));
+    	ret.put("result", UUID.randomUUID().toString());
+    	ret.put("jsonrpc","2.0");
+    	System.out.println("MyServiceImpl:"+JsonMapper.getInstance().toJson(ret));
 		return mapper.toJson(ret);
 	}
 

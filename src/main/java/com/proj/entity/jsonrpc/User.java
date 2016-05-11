@@ -1,13 +1,16 @@
 /**
  * 
  */
-package com.proj.test.jsonrpc;
+package com.proj.entity.jsonrpc;
+
+import org.apache.ibatis.type.Alias;
 
 /**
  * 
  * @author ctg
  * @date 2016年2月25日
  */
+@Alias("User2")
 public class User {
 
 	String userName;

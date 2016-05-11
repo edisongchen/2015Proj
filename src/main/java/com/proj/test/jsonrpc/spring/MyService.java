@@ -10,7 +10,7 @@ import com.googlecode.jsonrpc4j.JsonRpcError;
 import com.googlecode.jsonrpc4j.JsonRpcErrors;
 import com.googlecode.jsonrpc4j.JsonRpcParam;
 import com.googlecode.jsonrpc4j.JsonRpcService;
-import com.proj.test.jsonrpc.User;
+import com.proj.entity.jsonrpc.User;
 
 /**
  * 
@@ -29,5 +29,6 @@ public interface MyService {
 	User createUser(@JsonRpcParam("name2")String name,@JsonRpcParam("pwd2")String password) throws Exception;
 	String testListParam(@JsonRpcParam("properties") final List<String> properties);
 	String testBeanParam(User user);
+	@JsonRpcErrors(@JsonRpcError(exception = Exception.class,message ="test exception",code=-187))
 	String testMap(Map<String, String> map);
 }
