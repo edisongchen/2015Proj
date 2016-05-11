@@ -3,33 +3,27 @@
  */
 package com.proj.test.jsonrpc.spring;
 
-import static junit.framework.Assert.assertSame;
+import static org.junit.Assert.assertFalse;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.UUID;
 
-import javassist.expr.NewArray;
-
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.googlecode.jsonrpc4j.JsonRpcHttpClient;
-import com.googlecode.jsonrpc4j.spring.JsonServiceExporter;
-import com.proj.entity.jsonrpc.JsonRpc;
 import com.proj.entity.jsonrpc.User;
-import com.thoughtworks.xstream.mapper.Mapper.Null;
 
 /**
  * 
@@ -128,6 +122,26 @@ public class SpringJsonRPCTEST {
 			System.out.println(response);
 		} catch (Throwable e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	private JsonNode readJSON(ByteArrayOutputStream baos)
+			throws JsonProcessingException,
+			IOException {
+			return client.getObjectMapper().readTree(baos.toString());
+		}
+	@Test
+	public void testInvokeNoParams(){
+		 ByteArrayOutputStream baos=new ByteArrayOutputStream();
+		 try {
+			client.invoke("test", new Object[0], baos);
+			JsonNode node = readJSON(baos);
+			assertFalse(node.has("params"));
+			
+			client.invoke("test", (Object[])null, baos);
+			node = readJSON(baos);
+			assertFalse(node.has("params"));
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
