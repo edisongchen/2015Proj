@@ -11,8 +11,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Maps;
+import com.googlecode.jsonrpc4j.JsonRpcError;
+import com.googlecode.jsonrpc4j.JsonRpcErrors;
 import com.proj.common.mapper.JsonMapper;
 import com.proj.entity.jsonrpc.User;
+import com.thoughtworks.xstream.mapper.Mapper;
 
 /**
  * 
@@ -56,10 +59,11 @@ public class MyServiceImpl implements MyService{
 	}
 
 	@Override
+	@JsonRpcErrors(@JsonRpcError(exception = Exception.class,message ="a throws exception",code=-187))
 	public User createUser(String name, String password) throws Exception {
-		System.out.println("createUser"+name+"pwd:"+password);
+		System.out.println("createUser:"+name+" pwd:"+password);
 		if (true) {
-			throw new Exception();
+			throw new Exception("dddd");
 		}
 		return new User(name, name, password);
 	}
@@ -77,6 +81,8 @@ public class MyServiceImpl implements MyService{
 
 	@Override
 	public String testMap(Map<String, String> map) {
+		User user = null;
+		System.out.println(user.getFirstName());
 		return mapper.toJson(map);
 	}
 

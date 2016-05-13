@@ -29,6 +29,9 @@ public interface MyService {
 	User createUser(@JsonRpcParam("name2")String name,@JsonRpcParam("pwd2")String password) throws Exception;
 	String testListParam(@JsonRpcParam("properties") final List<String> properties);
 	String testBeanParam(User user);
-	@JsonRpcErrors(@JsonRpcError(exception = Exception.class,message ="test exception",code=-187))
+	@JsonRpcErrors({
+		@JsonRpcError(exception = NullPointerException.class,message ="test exception",code=-187),
+		@JsonRpcError(exception=Exception.class,code=-184,message="test throw")
+	})
 	String testMap(Map<String, String> map);
 }

@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.googlecode.jsonrpc4j.JsonRpcHttpClient;
+import com.googlecode.jsonrpc4j.ProxyUtil;
 import com.proj.entity.jsonrpc.User;
 
 /**
@@ -42,12 +43,40 @@ public class SpringJsonRPCTEST {
 			 baos = new ByteArrayOutputStream();
 			 bais = new ByteArrayInputStream(bytes);
 			 paramMap = Maps.newHashMap();
-			client = new JsonRpcHttpClient(new URL("http://127.0.0.1:8080/WEBDemo/testservlet/test2"));
+//			client = new JsonRpcHttpClient(new URL("http://127.0.0.1:8080/WEBDemo/testservlet/test2"));
+			client = new JsonRpcHttpClient(new URL("http://127.0.0.1:8080/WEBDemo/rpc/user.json"));
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
 	}
 	
+	@Test
+	public void testProxyUser2(){
+		try {
+			JsonRpcHttpClient client 
+				= new JsonRpcHttpClient(new URL("http://127.0.0.1:8080/WEBDemo/rpc/user.json"));
+			MyService service
+			= ProxyUtil.createClientProxy(getClass().getClassLoader(), MyService.class, client);
+		System.out.println(service.getUser("p"));
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testSpringMvc(){
+		String response=null;
+		Map<String,String> headers = new HashMap<String,String>();
+		 headers.put("jsonrpc", "2.0");
+		 headers.put("id", UUID.randomUUID().toString());
+		 client.setHeaders(headers);
+		 try {
+			User user = client.invoke("createUser", new Object[]{"a","b"}, User.class);
+			System.out.println("response:"+user);
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+	}
 	
 	
 	@Test
@@ -88,12 +117,15 @@ public class SpringJsonRPCTEST {
 		paramMap.put("id2", "fff2");
 		String response = null;
 		try {
-			response = client.invoke("testMap", paramMap,String.class);
-		} catch (Throwable e) {
+			response = client.invoke("testMap",new Object[]{paramMap},String.class);
+			System.out.println(response);
+		} catch (Exception e) {
 //			e.printStackTrace();
 			System.out.println(e.getMessage());
+		} catch (Throwable e) {
+//			e.printStackTrace();
 		}
-		System.out.println(response);
+		System.exit(0);
 	}
 	
 	@Test
