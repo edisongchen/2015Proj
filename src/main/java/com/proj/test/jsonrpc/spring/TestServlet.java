@@ -36,7 +36,7 @@ public class TestServlet {
 		}
 		try {
 			myService.handleRequest(request, response);
-			myService.setErrorResolver(AnnotationsErrorResolver.INSTANCE);
+//			myService.setErrorResolver(AnnotationsErrorResolver.INSTANCE);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

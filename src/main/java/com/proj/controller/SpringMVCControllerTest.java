@@ -20,7 +20,7 @@ import com.proj.entity.tree.ZTree;
 @RequestMapping("/springmvc")
 public class SpringMVCControllerTest {
 	private Logger logger = LoggerFactory.getLogger(SpringMVCControllerTest.class);
-	
+	//
 	@RequestMapping("/test")
 	public String test(Model model){
 		logger.info("success enter test method");

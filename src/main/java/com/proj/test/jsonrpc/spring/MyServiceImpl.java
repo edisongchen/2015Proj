@@ -29,7 +29,7 @@ public class MyServiceImpl implements MyService{
 	public String getUser() {
 		System.out.println("getUser//////////////");
 		Map<String, Object> ret = Maps.newHashMap();
-    	ret.put("id", "1");
+    	ret.put("id", "2");
     	ret.put("result", "success1");
     	ret.put("jsonrpc","1.2");
     	return mapper.toJson(ret);

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.googlecode.jsonrpc4j.AnnotationsErrorResolver;
+import com.googlecode.jsonrpc4j.JsonRpcServer;
 import com.googlecode.jsonrpc4j.spring.JsonServiceExporter;
 import com.proj.entity.jsonrpc.User;
 import com.proj.test.jsonrpc.spring.MyService;
@@ -30,15 +31,20 @@ public class UserRPCServer {
 	@ResponseBody
 	public void userHandler(HttpServletRequest request,HttpServletResponse response){
 		try {
+			String id = request.getHeader("id");
+			System.out.println("controller get headerId:"+id);
 			System.out.println("myService-hashcode:"+myService);
+			myService.setErrorResolver(JsonRpcServer.DEFAULT_ERRROR_RESOLVER);
 			myService.handleRequest(request, response);
-			myService.setErrorResolver(AnnotationsErrorResolver.INSTANCE);
+//			myService.setErrorResolver(AnnotationsErrorResolver.INSTANCE);
 		} catch (ServletException e) {
 			System.out.println("handler catch ServletException exception:==============");
 //			e.printStackTrace();
 		} catch (IOException e) {
 			System.out.println("handler catch IOException exception:==============");
 //			e.printStackTrace();
+		}catch (Exception e) {
+			System.out.println("catched exception...");
 		}
 	}
 	

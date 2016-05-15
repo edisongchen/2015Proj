@@ -578,7 +578,7 @@
 			<artifactId>jsonrpc2-client</artifactId>
 			<version>1.16.4</version>
 		</dependency>
-		<dependency>
+		<dependency><!-- TODO  -->
 			<groupId>com.thetransactioncompany</groupId>
 			<artifactId>jsonrpc2-server</artifactId>
 			<version>1.11</version>

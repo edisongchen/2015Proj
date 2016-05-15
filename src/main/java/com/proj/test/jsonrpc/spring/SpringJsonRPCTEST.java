@@ -44,6 +44,7 @@ public class SpringJsonRPCTEST {
 			 bais = new ByteArrayInputStream(bytes);
 			 paramMap = Maps.newHashMap();
 //			client = new JsonRpcHttpClient(new URL("http://127.0.0.1:8080/WEBDemo/testservlet/test2"));
+//			client = new JsonRpcHttpClient(new URL("http://101.204.29.210:8088/WEBDemo/rpc/user.json"));
 			client = new JsonRpcHttpClient(new URL("http://127.0.0.1:8080/WEBDemo/rpc/user.json"));
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
@@ -54,7 +55,7 @@ public class SpringJsonRPCTEST {
 	public void testProxyUser2(){
 		try {
 			JsonRpcHttpClient client 
-				= new JsonRpcHttpClient(new URL("http://127.0.0.1:8080/WEBDemo/rpc/user.json"));
+				= new JsonRpcHttpClient(new URL("http://101.204.29.210:8088/WEBDemo/rpc/user.json"));
 			MyService service
 			= ProxyUtil.createClientProxy(getClass().getClassLoader(), MyService.class, client);
 		System.out.println(service.getUser("p"));
@@ -71,8 +72,8 @@ public class SpringJsonRPCTEST {
 		 headers.put("id", UUID.randomUUID().toString());
 		 client.setHeaders(headers);
 		 try {
-			User user = client.invoke("createUser", new Object[]{"a","b"}, User.class);
-			System.out.println("response:"+user);
+			response = client.invoke("getUser", new Object[]{"b"}, String.class);
+			System.out.println("response:"+response);
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
