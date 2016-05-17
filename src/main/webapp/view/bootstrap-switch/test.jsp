@@ -43,6 +43,18 @@
     		console.log(test());
     		$(".testDiv").append(html);
     	});
+    	
+    	$("#testDis1").toggle(function (){
+    		console.log($("#testDis").bootstrapSwitch('readonly'));
+    		$("#testDis").bootstrapSwitch('readonly',false);
+    		$("#testDis").bootstrapSwitch('state',false);
+    		$("#testDis").bootstrapSwitch('readonly',true);
+    	},function (){
+    		console.log($("#testDis").bootstrapSwitch('readonly'));
+    		$("#testDis").bootstrapSwitch('readonly',false);
+    		$("#testDis").bootstrapSwitch('state',true);
+    		$("#testDis").bootstrapSwitch('readonly',true);
+    	})
     })
     
     function test(opt,sel){
@@ -78,5 +90,8 @@
 		<option value="2" >2</option>
 		<option value="3" >3</option>
 	</select>
+	
+	<input id="testDis1" type="button" value="disabeld blow"/>
+	<input id="testDis"  type="checkbox" data-on-text="o" data-off-text="x" >
   </body>
 </html>
