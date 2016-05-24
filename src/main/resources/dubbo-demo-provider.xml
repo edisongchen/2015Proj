@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ - Copyright 1999-2011 Alibaba Group.
+ -  
+ - Licensed under the Apache License, Version 2.0 (the "License");
+ - you may not use this file except in compliance with the License.
+ - You may obtain a copy of the License at
+ -  
+ -      http://www.apache.org/licenses/LICENSE-2.0
+ -  
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS,
+ - WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ - See the License for the specific language governing permissions and
+ - limitations under the License.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd" default-lazy-init="false">
+
+    <dubbo:application name="demo-provider" owner="programmer" organization="dubbox"/>
+
+    <dubbo:registry address="zookeeper://192.168.10.107:2183" check="false" 
+    	subscribe="false" />
+	<!-- 默认端口20880，测试时因为有另一个provider所以，这里设置了port -->
+    <dubbo:protocol name="dubbo" port="20881" serialization="kryo" optimizer="com.ctg.dubbo_hello_api.SerializationOptimizerImpl"/>
+ 
+     <!-- use tomcat server -->
+     <dubbo:protocol name="rest" port="9999" threads="500" contextpath="rs" server="tomcat" accepts="500"
+                     extension="com.alibaba.dubbo.rpc.protocol.rest.support.LoggingFilter"/>
+ 
+ 	<!-- <dubbo:protocol name="http" port="8889"/>
+    <dubbo:protocol name="hessian" port="8890"/>
+    <dubbo:protocol name="webservice" port="8892"/> -->
+    <dubbo:service interface="com.ctg.dubbo_hello_api.UserService" ref="userService" protocol="dubbo" />
+ 
+     <dubbo:service interface="com.ctg.dubbo_hello_api.UserRestService" ref="userRestService" protocol="rest"  validation="true"/>
+ 
+ 	<dubbo:annotation package="com.proj.webservice" />
+     <!-- <bean id="userService" class="com.proj.webservice.http.user.UserServiceImpl"/> -->
+ 
+     <!-- <bean id="userRestService" class="com.proj.webservice.rest.user.UserRestServiceImpl">
+         <property name="userService" ref="userService"/>
+     </bean> -->
+</beans>
