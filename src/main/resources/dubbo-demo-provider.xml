@@ -29,7 +29,7 @@
  
      <!-- use tomcat server -->
      <dubbo:protocol name="rest" port="9999" threads="500" contextpath="rs" server="tomcat" accepts="500"
-                     extension="com.alibaba.dubbo.rpc.protocol.rest.support.LoggingFilter"/>
+                     extension="com.alibaba.dubbo.rpc.protocol.rest.support.LoggingFilter,com.proj.interceptor.RestExceptionHandler"/>
  
  	<!-- <dubbo:protocol name="http" port="8889"/>
     <dubbo:protocol name="hessian" port="8890"/>

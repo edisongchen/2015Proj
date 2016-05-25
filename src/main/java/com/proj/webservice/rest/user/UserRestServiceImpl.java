@@ -11,6 +11,7 @@ import javax.ws.rs.core.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.dubbo.rpc.RpcContext;
 import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
 import com.ctg.dubbo_hello_api.User;
 import com.ctg.dubbo_hello_api.UserRestService;
@@ -34,7 +35,14 @@ public class UserRestServiceImpl implements UserRestService{
 	@Path("{id:\\d+}")
 	public User getUser(@Min(value=1L,message="User id must more than 1")
 						@PathParam("id")Long id) {
-		System.out.println("invoke UserRestServiceImpl");
+		System.out.println("invoke UserRestServiceImpl"+RpcContext.getContext().getRemoteAddressString());
 		return userService.getUser(id);
 	}
+
+	@GET
+	@Path("/testSimple")
+	public String testSimple() {
+		return "amdin";
+	}
+	
 }
