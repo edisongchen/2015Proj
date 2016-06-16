@@ -15,8 +15,9 @@
 <body>
 	<div>
 		<form id="loginForm" action="${ctx}/login" method="post">
-			<input type="text" name="username" placeHolder="用户名" />
+			<input type="text" name="username" placeHolder="用户名" value="${username}" />
 			<input type="text" name="password" placeHolder="密码" />
+			<input type="checkbox" name="rememberMe" >记住我</input>
 			<input type="submit" value="登录"/>
 		</form>
 	</div>

@@ -1,7 +1,5 @@
 package com.proj.entity.sys;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 
 import com.proj.common.persistence.IdEntity;

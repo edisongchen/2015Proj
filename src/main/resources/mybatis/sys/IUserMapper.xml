@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.proj.dao.mybatis.sys.IUserDao">
+	<sql id="Base_Column_List" >
+	   id, login_name,name,password,email,phone
+	</sql>
+	  
+	<insert id="save" parameterType="User">
+		INSERT  INTO sys_user(
+		<include refid="Base_Column_List" />
+		)
+		VALUES(#{id},#{loginName},#{name},#{password},#{email},#{phone})
+	</insert>
+	
+	<!-- 删除 -->
+	<delete id="deleteById" parameterType="string">
+		UPDATE sys_user set del_flag='1' where id=#{id}
+	</delete>
+	
+	<update id="update" parameterType="User">
+		update sys_user
+		<set>
+			<if test="loginName !=null and loginName !=''">
+				login_name = #{loginName,jdbcType=VARCHAR} ,
+			</if>
+			<if test="name !=null and name !=''">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="password !=null and password !=''">
+				password = #{password,jdbcType=VARCHAR},
+			</if>
+			<if test="email !=null and email !=''">
+				email = #{email,jdbcType=VARCHAR},
+			</if>
+			<if test="phone !=null and phone !=''">
+				phone = #{phone,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id=#{id} and del_flag=0;
+	</update>
+	
+	<select id="findById" parameterType="string" resultMap="UserMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		from sys_user
+		where id='1'
+	 </select>
+	 
+	 <select id="findByLoginName" parameterType="string" resultMap="UserMap">
+	 	SELECT
+		<include refid="Base_Column_List" />
+		from sys_user
+		where login_name=#{loginName} and del_flag=0
+	 </select>
+	 
+	 <resultMap id="UserMap" type="User">
+	 	<id property="id" column="id" />
+	 	<result property="loginName" column="login_name" />
+	 	<result property="password" column="password" />
+	 	<result property="name" column="name" />
+	 	<result property="email" column="email" />
+	 	<result property="phone" column="phone" />
+	 </resultMap>
+</mapper>

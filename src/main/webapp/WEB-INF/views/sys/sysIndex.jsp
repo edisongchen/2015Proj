@@ -10,6 +10,7 @@
 <body>
 	<div>
 		这是首页
+		<a href="${ctx }/logout">退出</a>
 	</div>
 </body>
 </html>

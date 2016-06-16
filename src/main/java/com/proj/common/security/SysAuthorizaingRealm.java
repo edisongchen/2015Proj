@@ -16,7 +16,9 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.springframework.stereotype.Service;
 
+import com.proj.common.util.ApplicationContextHelper;
 import com.proj.entity.sys.User;
+import com.proj.service.SystemService;
 
 /**
  *	系统授权类
@@ -25,6 +27,8 @@ import com.proj.entity.sys.User;
 @Service
 public class SysAuthorizaingRealm extends AuthorizingRealm{
 
+	private SystemService sysService;
+	
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		return null;
@@ -37,17 +41,11 @@ public class SysAuthorizaingRealm extends AuthorizingRealm{
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken pToken) throws AuthenticationException {
 		UsernamePasswordToken token=(UsernamePasswordToken)pToken;
 		String username = token.getUsername();
-		//TODO 先尝试一个简单的身份认证
-		User user = new User();
-		user.setLoginName(username);
-		user.setName("陈");
-		user.setPassword("edison");
-		user.setId("ids1");
+		User user = getSystemService().getUserByLoginName(username);
 		/**
 		 * 返回SimpleAuthenticationInfo认证实例，与formAuthentication构造的token
 		 * 进行默认策略 如果认证成功会返回successUrl(shiroFilter中配置)否则getPrincipal为空
 		 */
-		//如果身份认证成功,则返回一个AuthenticationInfo实例
 		return new SimpleAuthenticationInfo(new Principal(user), user.getPassword(), getName());
 	}
 	
@@ -70,6 +68,13 @@ public class SysAuthorizaingRealm extends AuthorizingRealm{
 				cache.remove(key);
 			}
 		}
+	}
+	
+	private SystemService getSystemService(){
+		if (sysService == null) {
+			sysService = ApplicationContextHelper.getBean(SystemService.class);
+		}
+		return sysService;
 	}
 
 	/**

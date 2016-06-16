@@ -2,10 +2,8 @@ package com.proj.controller.sys;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
-import org.apache.zookeeper.Login;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,33 +11,44 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.proj.common.security.FormAuthenticationFilter;
-import com.proj.common.security.SysAuthorizaingRealm.Principal;
+import com.proj.common.util.StringUtils;
+import com.proj.common.util.UserUtils;
+import com.proj.entity.sys.User;
 
 @Controller
 public class LoginController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(){
+		User user = UserUtils.getUser();
+		if (user != null && user.getId() !=null) {
+			return "redirect:/index";
+		}
 		return "/sys/sysLogin";
 	}
 	
 	@RequestMapping(value = "/login",method =RequestMethod.POST)
 	public String login(@RequestParam(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM) String username,
 			HttpServletRequest request, HttpServletResponse response, Model model){
-		 Subject subject = SecurityUtils.getSubject();
-         Principal principal = (Principal) subject.getPrincipal();
-         if (principal != null) {
-        	 System.out.println(principal.getId());
+		User user = UserUtils.getUser();
+		if (user != null && user.getId() !=null) {
 			return "redirect:/index";
 		}
-        System.out.println("/////登陆失败");
+		model.addAttribute(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM, username);
         return "/sys/sysLogin";
 	}
 	
 	@RequestMapping(value = "/index")
-	public String toIndex(){
-		//TODO 需要验证
-		System.out.println("to index...");
+	public String toIndex(HttpServletRequest request,HttpServletResponse response){
+		User user = UserUtils.getUser();
+		if (user == null) {
+			return "redirect:/login";
+		}
+		//登陆成功后
+		if (user !=null && StringUtils.isNotBlank(user.getId())) {
+			HttpSession session = request.getSession();
+			session.setAttribute("user", user);
+		}
 		return "/sys/sysIndex";
 	}
 }
