@@ -39,7 +39,7 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value = "/index")
-	public String toIndex(HttpServletRequest request,HttpServletResponse response){
+	public String toIndex(HttpServletRequest request,HttpServletResponse response,Model model){
 		User user = UserUtils.getUser();
 		if (user == null) {
 			return "redirect:/login";
@@ -48,6 +48,7 @@ public class LoginController {
 		if (user !=null && StringUtils.isNotBlank(user.getId())) {
 			HttpSession session = request.getSession();
 			session.setAttribute("user", user);
+			model.addAttribute("user", user);
 		}
 		return "/sys/sysIndex";
 	}

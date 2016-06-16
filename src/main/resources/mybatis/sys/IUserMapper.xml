@@ -45,7 +45,7 @@
 		SELECT
 		<include refid="Base_Column_List" />
 		from sys_user
-		where id='1'
+		where id=#{id} and del_flag=0
 	 </select>
 	 
 	 <select id="findByLoginName" parameterType="string" resultMap="UserMap">

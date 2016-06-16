@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import com.ctg.dubbo_hello_api.User;
 import com.ctg.dubbo_hello_api.UserService;
 
-@Service("userService")
+@Service("userHttpService")
 public class UserServiceImpl implements UserService{
 
 	@Override

@@ -4,19 +4,25 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.SimplePrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.stereotype.Service;
 
 import com.proj.common.util.ApplicationContextHelper;
+import com.proj.common.util.Constant;
+import com.proj.common.util.Encodes;
 import com.proj.entity.sys.User;
 import com.proj.service.SystemService;
 
@@ -46,7 +52,13 @@ public class SysAuthorizaingRealm extends AuthorizingRealm{
 		 * 返回SimpleAuthenticationInfo认证实例，与formAuthentication构造的token
 		 * 进行默认策略 如果认证成功会返回successUrl(shiroFilter中配置)否则getPrincipal为空
 		 */
-		return new SimpleAuthenticationInfo(new Principal(user), user.getPassword(), getName());
+		if (user !=null) {
+//			return new SimpleAuthenticationInfo(new Principal(user), user.getPassword(), getName());
+			byte[] salt = Encodes.decodeHex(user.getPassword().substring(0, 16));
+			return new SimpleAuthenticationInfo(new Principal(user), user.getPassword().substring(16),ByteSource.Util.bytes(salt) ,getName());
+		}else {
+			return null;
+		}
 	}
 	
 	
@@ -68,6 +80,17 @@ public class SysAuthorizaingRealm extends AuthorizingRealm{
 				cache.remove(key);
 			}
 		}
+	}
+	
+	/**
+	 * 设定密码校验的Hash算法与迭代次数
+	 */
+	@PostConstruct
+	public void initCredentialsMatcher(){
+		//构造方法完成后执行
+		HashedCredentialsMatcher matcher = new HashedCredentialsMatcher();
+		matcher.setHashIterations(Constant.HASH_INTERATIONS);
+		setCredentialsMatcher(matcher);
 	}
 	
 	private SystemService getSystemService(){
