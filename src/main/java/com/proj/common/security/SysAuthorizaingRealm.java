@@ -53,7 +53,6 @@ public class SysAuthorizaingRealm extends AuthorizingRealm{
 		 * 进行默认策略 如果认证成功会返回successUrl(shiroFilter中配置)否则getPrincipal为空
 		 */
 		if (user !=null) {
-//			return new SimpleAuthenticationInfo(new Principal(user), user.getPassword(), getName());
 			byte[] salt = Encodes.decodeHex(user.getPassword().substring(0, 16));
 			return new SimpleAuthenticationInfo(new Principal(user), user.getPassword().substring(16),ByteSource.Util.bytes(salt) ,getName());
 		}else {
@@ -87,8 +86,6 @@ public class SysAuthorizaingRealm extends AuthorizingRealm{
 	 */
 	@PostConstruct
 	public void initCredentialsMatcher(){
-		//构造方法完成后执行
-		System.out.println("/////////");
 		HashedCredentialsMatcher matcher = new HashedCredentialsMatcher(Constant.HASH_ALGORITHM);
 		matcher.setHashIterations(Constant.HASH_INTERATIONS);
 		setCredentialsMatcher(matcher);
