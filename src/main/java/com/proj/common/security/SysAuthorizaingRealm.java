@@ -88,7 +88,8 @@ public class SysAuthorizaingRealm extends AuthorizingRealm{
 	@PostConstruct
 	public void initCredentialsMatcher(){
 		//构造方法完成后执行
-		HashedCredentialsMatcher matcher = new HashedCredentialsMatcher();
+		System.out.println("/////////");
+		HashedCredentialsMatcher matcher = new HashedCredentialsMatcher(Constant.HASH_ALGORITHM);
 		matcher.setHashIterations(Constant.HASH_INTERATIONS);
 		setCredentialsMatcher(matcher);
 	}

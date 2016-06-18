@@ -89,7 +89,7 @@
 	<bean id="shiroCacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager" /> -->
 
 	<!-- session 集群
-	<bean id="shiroCacheManager" class="com.gospell.nms.common.security.shiro.ShiroRedisCacheManager"> 
+	<bean id="shiroCacheManager" class="com.proj.common.security.shiro.ShiroRedisCacheManager"> 
 		<property name="cached" ref="redisCached" /> 
 	</bean>
 	 -->
