@@ -17,6 +17,7 @@
         <property name="filters">
             <map><!-- nameableFilter authc com.proj.common.security.FormAuthenticationFilter-->
                 <entry key="authc" value-ref="formAuthenticationFilter"/>
+                <entry key="ssl" value-ref="sslFilter"/>
             </map>
         </property>
 		<!-- 访问地址的过滤规则,从上至下的优先级,如果有匹配的规则,就会返回,不会再进行匹配 -->
@@ -30,11 +31,15 @@
 				/rs/** = anon
 				/app/** = anon
 				/websocket/** = anon
-				/login = authc
+				/login = authc,ssl
 				/logout = logout
 			</value>
 		</property>
 		
+	</bean>
+	
+	<bean id="sslFilter" class="org.apache.shiro.web.filter.authz.SslFilter">
+		<property name="port" value="8443" />
 	</bean>
 	
 	<!-- 权限管理器 -->
