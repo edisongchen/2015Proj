@@ -19,7 +19,7 @@
     </context:component-scan>
     
     <!-- 定义aspectj -->
-    <!-- <aop:aspectj-autoproxy proxy-target-class="true"/> -->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
     
 	<!-- only for test -->
 	<!-- <import resource="classpath*:test/test.xml" /> -->

@@ -2,6 +2,7 @@ package com.proj.common.security;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -13,6 +14,7 @@ import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
@@ -20,9 +22,11 @@ import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.stereotype.Service;
 
+import com.google.common.collect.Lists;
 import com.proj.common.util.ApplicationContextHelper;
 import com.proj.common.util.Constant;
 import com.proj.common.util.Encodes;
+import com.proj.common.util.UserUtils;
 import com.proj.entity.sys.User;
 import com.proj.service.SystemService;
 
@@ -37,7 +41,22 @@ public class SysAuthorizaingRealm extends AuthorizingRealm{
 	
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-		return null;
+		Principal principal = (Principal) getAvailablePrincipal(principals);
+		User user = getSystemService().getUserByLoginName(principal.getLoginName());
+		if (user !=null) {
+			UserUtils.putCache(Constant.CACHE_USER, user);
+			//授权info
+			SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+			List<String> permissions = Lists.newArrayList();
+			//TODO 模拟的
+			permissions.add("user:view");
+			permissions.add("user:edit");
+			info.addStringPermissions(permissions);
+			return info;
+		} else {
+			return null;
+		}
+		
 	}
 
 	/**
