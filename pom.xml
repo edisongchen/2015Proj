@@ -48,6 +48,7 @@
 		<websocket.version>1.1</websocket.version>
 		<apache.netty>4.0.28.Final</apache.netty>
 		<dubbo.version>2.8.4</dubbo.version>
+		<rabbitmq.version>3.6.3</rabbitmq.version>
 		<!-- Plugin的属性定义 -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.7</java.version>
@@ -749,7 +750,14 @@
 			</exclusions>
 		</dependency>
 		
+		<!-- RabbitMQ START-->
+		<!-- <dependency>
+		  <groupId>com.rabbitmq</groupId>
+		  <artifactId>amqp-client</artifactId>
+		  <version>${rabbitmq.version}</version>
+		</dependency> -->
 		
+		<!-- RabbitMQ END-->
 		<!-- TEST begin -->
 		<!-- junit -->
 		<dependency>
