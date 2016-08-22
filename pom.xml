@@ -157,6 +157,11 @@
 <!-- 设定依赖仓库,按设定顺序进行查找.否者后面出错-end -->
 <!-- 定义依赖项的version,scope与exclusions,groupId artifactId-->
 <dependencies>
+	<dependency>
+	  <groupId>org.fusesource.mqtt-client</groupId>
+	  <artifactId>mqtt-client</artifactId>
+	  <version>1.14</version>
+	</dependency>
 	<!-- SPRING basic begin(不需要显式定 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
