@@ -36,9 +36,13 @@ public class UserController {
 	@RequestMapping("/save")
 	public String save(User user,String newLoginName,String newPassword) {
 		try {
-			
-			//user.setPassword(SystemService.entryptPassword(newPassword));
-			//userService.update(user);
+			if (!StringUtils.isEmpty(newPassword)) {
+				user.setPassword(SystemService.entryptPassword(newPassword));
+			}
+			if (!StringUtils.isEmpty(newLoginName)) {
+				user.setLoginName(newLoginName);
+			}
+			userService.update(user);
 			 // 清除当前用户缓存
 			UserUtils.getCacheMap().clear();
 		} catch (Exception e) {
