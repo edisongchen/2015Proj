@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.proj.common.security.SysAuthorizaingRealm;
-import com.proj.common.util.UserUtils;
 import com.proj.dao.mybatis.sys.IUserDao;
 import com.proj.entity.sys.User;
 

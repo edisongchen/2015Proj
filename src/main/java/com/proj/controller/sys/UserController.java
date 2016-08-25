@@ -21,7 +21,7 @@ public class UserController {
 
 	@ModelAttribute
 	public User get(@RequestParam(required = false) String id) {
-		if (StringUtils.isNotBlank(id)) {
+		if (org.apache.commons.lang3.StringUtils.isNotBlank(id)) {
 			return userService.getUserById(id);
 		} else {
 			return new User();
@@ -36,10 +36,10 @@ public class UserController {
 	@RequestMapping("/save")
 	public String save(User user,String newLoginName,String newPassword) {
 		try {
-			if (!StringUtils.isEmpty(newPassword)) {
+			if (!org.apache.commons.lang3.StringUtils.isEmpty(newPassword)) {
 				user.setPassword(SystemService.entryptPassword(newPassword));
 			}
-			if (!StringUtils.isEmpty(newLoginName)) {
+			if (!org.apache.commons.lang3.StringUtils.isEmpty(newLoginName)) {
 				user.setLoginName(newLoginName);
 			}
 			userService.update(user);

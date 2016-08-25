@@ -7,6 +7,7 @@ import org.quartz.JobKey;
 
 public class SimpleJob implements Job{
 
+	@Override
 	public void execute(JobExecutionContext pJobexecutioncontext) throws JobExecutionException {
 		JobKey jobKey = pJobexecutioncontext.getJobDetail().getKey();
 		System.out.println("SimpleJob.getJobkey:"+jobKey);

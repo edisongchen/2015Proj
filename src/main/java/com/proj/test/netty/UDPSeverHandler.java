@@ -14,7 +14,7 @@ public class UDPSeverHandler extends SimpleChannelInboundHandler<DatagramPacket>
 		
 		System.out.println(this);
 		System.out.println("read socket");
-		ByteBuf buf = (ByteBuf) packet.copy().content();
+		ByteBuf buf = packet.copy().content();
         byte[] req = new byte[buf.readableBytes()];
         buf.readBytes(req);
         String body = new String(req, "UTF-8");

@@ -31,6 +31,7 @@ public class UserRestServiceImpl implements UserRestService{
 		this.userService = userService;
 	}
 
+	@Override
 	@GET
 	@Path("{id:\\d+}")
 	public User getUser(@Min(value=1L,message="User id must more than 1")

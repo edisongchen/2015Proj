@@ -3,14 +3,10 @@ package com.proj.test;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelOutboundHandlerAdapter;
 import io.netty.channel.SimpleChannelInboundHandler;
 
 import java.util.logging.Logger;
-
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Created by Administrator on 2016/2/1.

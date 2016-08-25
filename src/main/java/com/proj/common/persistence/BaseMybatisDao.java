@@ -1,7 +1,6 @@
 package com.proj.common.persistence;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * 

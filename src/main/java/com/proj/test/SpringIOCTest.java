@@ -6,7 +6,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.proj.entity.Author;
 import com.proj.entity.Book;
-import com.proj.service.quartz.MyBean;
 import com.proj.util.FactoryTest;
 
 public class SpringIOCTest {

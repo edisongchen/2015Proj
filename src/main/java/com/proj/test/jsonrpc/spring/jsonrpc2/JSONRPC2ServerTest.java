@@ -19,20 +19,22 @@ public class JSONRPC2ServerTest {
 	
 
         // Reports the method names of the handled requests
-        public String[] handledRequests() {
+        @Override
+		public String[] handledRequests() {
 		
             return new String[]{"echo"};
         }
 		
 		
          // Processes the requests
-         public JSONRPC2Response process(JSONRPC2Request req, MessageContext ctx) {
+         @Override
+		public JSONRPC2Response process(JSONRPC2Request req, MessageContext ctx) {
 			
              if (req.getMethod().equals("echo")) {
 				
                  // Echo first parameter
 				
-                 List params = (List)req.getPositionalParams();
+                 List params = req.getPositionalParams();
 	 
                  Object input = params.get(0);
 	 
@@ -54,6 +56,7 @@ public class JSONRPC2ServerTest {
 	
 	
         // Reports the method names of the handled requests
+	@Override
 	public String[] handledRequests() {
 	
 	    return new String[]{"getDate", "getTime"};
@@ -61,6 +64,7 @@ public class JSONRPC2ServerTest {
 	
 	
 	// Processes the requests
+	@Override
 	public JSONRPC2Response process(JSONRPC2Request req, MessageContext ctx) {
 	
 	    if (req.getMethod().equals("getDate")) {

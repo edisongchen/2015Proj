@@ -1,7 +1,6 @@
 package com.proj.util;
 
 import com.proj.entity.Author;
-import com.proj.entity.Book;
 
 public class FactoryTest {
 	// private constructor

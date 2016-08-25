@@ -8,14 +8,11 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
 import com.google.common.collect.Maps;
 import com.googlecode.jsonrpc4j.JsonRpcError;
 import com.googlecode.jsonrpc4j.JsonRpcErrors;
 import com.proj.common.mapper.JsonMapper;
 import com.proj.entity.jsonrpc.User;
-import com.thoughtworks.xstream.mapper.Mapper;
 
 /**
  * 
@@ -26,6 +23,7 @@ import com.thoughtworks.xstream.mapper.Mapper;
 public class MyServiceImpl implements MyService{
 
 	static JsonMapper mapper = JsonMapper.getInstance();
+	@Override
 	public String getUser() {
 		System.out.println("getUser//////////////");
 		Map<String, Object> ret = Maps.newHashMap();

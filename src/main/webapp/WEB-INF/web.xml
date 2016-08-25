@@ -34,7 +34,7 @@
     </servlet-mapping>
 
 	<!--dubbo services  -->
-	<context-param>
+	<!-- <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath:dubbo-demo-provider.xml</param-value>
     </context-param>
@@ -47,7 +47,7 @@
         <servlet-name>dispatcher</servlet-name>
         <servlet-class>com.alibaba.dubbo.remoting.http.servlet.DispatcherServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
-    </servlet>
+    </servlet> -->
 
 	<!-- Spring ApplicationContext配置文件的路径,可使用通配符，用于后面的Spring Context Loader -->
 	<context-param>

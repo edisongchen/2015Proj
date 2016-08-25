@@ -1,9 +1,6 @@
 package com.proj.test.mq.emqtt;
 
 import java.net.URISyntaxException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import org.fusesource.mqtt.client.FutureConnection;
 import org.fusesource.mqtt.client.MQTT;
 import org.fusesource.mqtt.client.QoS;

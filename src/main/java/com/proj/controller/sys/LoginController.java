@@ -34,7 +34,7 @@ public class LoginController {
 		if (user != null && user.getId() !=null) {
 			return "redirect:/index";
 		}
-		model.addAttribute(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM, username);
+		model.addAttribute(org.apache.shiro.web.filter.authc.FormAuthenticationFilter.DEFAULT_USERNAME_PARAM, username);
         return "/sys/sysLogin";
 	}
 	
@@ -45,7 +45,7 @@ public class LoginController {
 			return "redirect:/login";
 		}
 		//登陆成功后
-		if (user !=null && StringUtils.isNotBlank(user.getId())) {
+		if (user !=null && org.apache.commons.lang3.StringUtils.isNotBlank(user.getId())) {
 			HttpSession session = request.getSession();
 			session.setAttribute("user", user);
 			model.addAttribute("user", user);

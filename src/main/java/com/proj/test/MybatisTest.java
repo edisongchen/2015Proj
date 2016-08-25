@@ -3,9 +3,6 @@ package com.proj.test;
 import java.sql.SQLException;
 
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
 import com.proj.common.util.ApplicationContextHelper;
 import com.proj.dao.mybatis.sys.IUserDao;
 import com.proj.entity.sys.User;

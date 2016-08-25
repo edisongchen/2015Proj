@@ -1,8 +1,6 @@
 package com.proj.controller.rpc.user;
 
-import java.io.IOException;import java.util.List;
-import java.util.Map;
-
+import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,10 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.googlecode.jsonrpc4j.AnnotationsErrorResolver;
-import com.googlecode.jsonrpc4j.JsonRpcServer;
+import com.googlecode.jsonrpc4j.JsonRpcBasicServer;
 import com.googlecode.jsonrpc4j.spring.JsonServiceExporter;
-import com.proj.entity.jsonrpc.User;
 import com.proj.test.jsonrpc.spring.MyService;
 import com.proj.test.jsonrpc.spring.MyServiceImpl;
 
@@ -34,7 +30,7 @@ public class UserRPCServer {
 			String id = request.getHeader("id");
 			System.out.println("controller get headerId:"+id);
 			System.out.println("myService-hashcode:"+myService);
-			myService.setErrorResolver(JsonRpcServer.DEFAULT_ERRROR_RESOLVER);
+			myService.setErrorResolver(JsonRpcBasicServer.DEFAULT_ERRROR_RESOLVER);
 			myService.handleRequest(request, response);
 //			myService.setErrorResolver(AnnotationsErrorResolver.INSTANCE);
 		} catch (ServletException e) {

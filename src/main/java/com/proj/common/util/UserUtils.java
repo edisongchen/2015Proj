@@ -4,9 +4,6 @@ import java.util.Map;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
-import org.dom4j.util.UserDataAttribute;
-import org.hibernate.internal.StaticFilterAliasGenerator;
-
 import com.google.common.collect.Maps;
 import com.proj.common.security.SysAuthorizaingRealm.Principal;
 import com.proj.dao.mybatis.sys.IUserDao;
