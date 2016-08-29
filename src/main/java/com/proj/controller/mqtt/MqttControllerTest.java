@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.proj.common.util.StringUtils;
-import com.proj.service.mqtt.MQDTO;
 
 @Controller
 @RequestMapping("/mqtt")
@@ -26,15 +25,13 @@ public class MqttControllerTest {
 	
 	@RequestMapping("/pub")
 	public void subTopic(String msg,String topic,String name){
-		MQDTO dto = new MQDTO(name,topic,msg);
-		
 		System.out.println(outHandler);
 		if (StringUtils.isNotEmpty(topic)) {
 			outHandler.setDefaultTopic(topic);
 		}
 		outHandler.setDefaultRetained(false);
 		System.out.println("will send message:"+msg);
-		outHandler.handleMessage(new GenericMessage<String>(dto.toString()));
+		outHandler.handleMessage(new GenericMessage<String>(msg));
 		System.out.println("//////////");
 	}
 	@RequestMapping("/sub")
