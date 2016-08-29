@@ -10,14 +10,14 @@ import org.fusesource.mqtt.client.QoS;
 import org.fusesource.mqtt.client.Topic;
 
 public class Client {
-	 private final static String CONNECTION_STRING = "tcp://192.168.10.135:1883";    
-	    private final static boolean CLEAN_START = false;    
+	 private final static String CONNECTION_STRING = "tcp://192.168.10.136:1883";    
+	    private final static boolean CLEAN_START = true;    
 	    private final static short KEEP_ALIVE = 30;// 低耗网络，但是又需要及时获取数据，心跳30s    
 	    private final static String CLIENT_ID = "testclientid0";  //唯一标志，不可重复  
 	    public static Topic[] topics = {     
-	        new Topic("mqtt/aaa", QoS.EXACTLY_ONCE), //  2 只有一次  
-	        new Topic("mqtt/bbb", QoS.AT_LEAST_ONCE),  // 1 至少一次  
-	        new Topic("mqtt/ccc", QoS.AT_MOST_ONCE) // 0 至多一次 
+	        new Topic("/a", QoS.AT_MOST_ONCE), //  2 只有一次  
+	        new Topic("/ctrlMsg", QoS.AT_LEAST_ONCE),  // 1 至少一次  
+	        new Topic("/hostMsg", QoS.AT_LEAST_ONCE) // 0 至多一次 
 //	        new Topic("$SYS/#", QoS.AT_LEAST_ONCE)
 	    }; 
 	        

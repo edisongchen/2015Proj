@@ -91,4 +91,5 @@
 	
 	<!-- 引入shiro config-->
 	<import resource="classpath*:shiro/applicationContext-shiro.xml" />
+	<import resource="classpath:mqtt/**/*.xml" />
 </beans>

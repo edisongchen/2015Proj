@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:int-mqtt="http://www.springframework.org/schema/integration/mqtt"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/integration/mqtt 
+		http://www.springframework.org/schema/integration/mqtt/spring-integration-mqtt.xsd">
+
+	<int-mqtt:message-driven-channel-adapter
+		id="signalTopicsAdapter" client-id="edstest123" url="tcp://192.168.10.136:1883"
+		topics="a" client-factory="subFactory" send-timeout="124" channel="startCase" />
+
+
+	<int:channel id="startCase" />
+	
+	<!-- https://www.safaribooksonline.com/library/view/just-spring-integration/9781449335403/ch04s02.html
+		service-activator explain
+	 -->
+	<int:service-activator id="startCaseService"
+        input-channel="startCase" ref="mqttCaseService" method="startCaseChannel" />
+
+	<bean id="mqttCaseService" class="com.proj.service.mqtt.MqttCaseService" />
+
+	<bean id="subFactory"
+		class="org.springframework.integration.mqtt.core.DefaultMqttPahoClientFactory" />
+	
+</beans>
