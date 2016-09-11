@@ -18,3 +18,4 @@ hibernate.reveng.xml
 .DS_Store
 .tern-project
 /bak
+/bin/
