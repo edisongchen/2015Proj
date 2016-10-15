@@ -19,3 +19,6 @@ hibernate.reveng.xml
 .tern-project
 /bak
 /bin/
+/db/init.sql
+/src/main/resources/application.properties
+
