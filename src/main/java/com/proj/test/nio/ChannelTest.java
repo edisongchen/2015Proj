@@ -35,15 +35,14 @@ public class ChannelTest {
 			RandomAccessFile aFile = new RandomAccessFile("file/file1.txt", "rw");
 			FileChannel inChannel = aFile.getChannel();
 			ByteBuffer buf = ByteBuffer.allocate(8);
-			int readByte = inChannel.read(buf);
-			while(readByte !=-1){
-				System.out.println("Read "+readByte);
+			while(inChannel.read(buf) !=-1){
+				System.out.println("Read ...");
 				buf.flip();//clear and ready next 
 				while(buf.hasRemaining()){
-					System.out.println((char)buf.get());
+					System.out.print((char)buf.get());
 				}
+				System.out.println();
 				buf.clear();
-				readByte = inChannel.read(buf);
 			}
 			aFile.close();
 			
@@ -64,7 +63,7 @@ public class ChannelTest {
 		//read,write,close,position,size,truncate,force
 		String nowDate = " now :"+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 		ByteBuffer buf = ByteBuffer.allocate(50);
-		buf.clear();
+		//buf.clear();
 		buf.put(nowDate.getBytes());
 		File file = new File("file/file1.txt");
 		FileOutputStream fos;
