@@ -6,7 +6,8 @@
 /target
 .project
 /.idea
-.classpath
+
+bin/
 .myhibernatedata
 hibernate.cfg.xml
 hibernate.reveng.xml
