@@ -8,6 +8,7 @@
 .project
 /.idea
 
+bin/
 .myhibernatedata
 hibernate.cfg.xml
 hibernate.reveng.xml
