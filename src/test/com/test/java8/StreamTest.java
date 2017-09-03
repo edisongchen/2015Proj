@@ -7,6 +7,7 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.Stack;
 import java.util.stream.Collectors;
@@ -129,5 +130,59 @@ public class StreamTest {
                 .reduce(Integer::sum)//reduce没有起始值，返回Optional
                 .getAsInt();
 
+    }
+
+    @Test
+    public void groupingBy() {
+        List<User> listMap = Lists.newArrayList();
+        for (int i = 0; i < 10; i++) {
+            Random random = new Random();
+            User user = new User();
+            user.setId(random.nextInt(100));
+            user.setAge(random.nextInt(4));
+            listMap.add(user);
+        }
+        System.out.println(listMap);
+
+        Map<Integer, Long> groupMap =
+                listMap.stream().limit(10)
+                        .collect(Collectors.groupingBy(User::getAge, Collectors.counting()));
+
+        Map<Integer, List<User>> groupMap2 = listMap.stream()
+                .collect(Collectors.groupingBy(User::getAge));
+
+        System.out.println(groupMap);
+        System.out.println("/////////////");
+        System.out.println(groupMap2);
+    }
+
+}
+
+class User {
+    private Integer id;
+    private Integer age;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", age=" + age +
+                '}';
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
     }
 }
