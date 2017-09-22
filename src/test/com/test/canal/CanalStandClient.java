@@ -30,6 +30,8 @@ public class CanalStandClient {
      * zk server ha架构 使用memory+zk保证 canal server的高可用
      * 使用spring/default-instance.xml 先写内存，再写zk
      * canal server相关信息存储到zk上，当有一个canal server failover，另一个热备将启用
+     * canal client也可以做ha 当多个client连接到集群中，当其中某一个client failover，另一个client会切换
+     * (切换的时间 TODO 公式=?)
      */
     @Test
     public void zkClusterTest() {
