@@ -31,7 +31,7 @@ public class CanalStandClient {
      * 使用spring/default-instance.xml 先写内存，再写zk
      * canal server相关信息存储到zk上，当有一个canal server failover，另一个热备将启用
      * canal client也可以做ha 当多个client连接到集群中，当其中某一个client failover，另一个client会切换
-     * (切换的时间 TODO 公式=?)
+     * (切换的时间  公式= session过期时间默认为zookeeper配置文件中定义的tickTime的20倍，如果不改动zookeeper配置，那默认就是40秒)
      */
     @Test
     public void zkClusterTest() {
