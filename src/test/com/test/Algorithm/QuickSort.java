@@ -57,7 +57,6 @@ public class QuickSort {
         if (left>right){return;}
         int i=left;
         int j=right;
-        int tmp;
         int middle = array[left];
 
         while(i<j){
@@ -76,7 +75,6 @@ public class QuickSort {
                array[j]=array[i];
                 j--;
             }
-
         }
         //循环退出，此时i
         array[i]=middle;
@@ -84,6 +82,8 @@ public class QuickSort {
         quickSort(array,left,i-1);
         quickSort(array,i+1,right);
     }
+
+
 
     public static int partition(int []array,int lo,int hi){
         //三数取中

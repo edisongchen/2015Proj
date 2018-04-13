@@ -10,9 +10,8 @@ import java.net.InetSocketAddress;
 import java.util.List;
 
 /**
- * ref https://github.com/alibaba/canal/wiki/ClientExample
- * 默认的，如果updat时，column都没有改变，则不会被检测到。
- * print column时都有update=true/false 标识变化前后是否更改
+ * ref https://github.com/alibaba/canal/wiki/ClientExample 默认的，如果updat时，column都没有改变，则不会被检测到。 print
+ * column时都有update=true/false 标识变化前后是否更改
  */
 public class CanalStandClient {
 
@@ -21,29 +20,36 @@ public class CanalStandClient {
      */
     @Test
     public void SimpleClientTest() {
-        CanalConnector connector = CanalConnectors.newSingleConnector(new InetSocketAddress("slave-haixue2",
-                11111), "example", "", "");
-        doConnect(connector);
+        CanalConnector connector = CanalConnectors
+                .newSingleConnector(new InetSocketAddress("master-haixue", 11111), "example", "", "");
+        doConnect(connector,"canal\\.canal.*");
+    }
+
+    @Test
+    public void Test333ClientTest() {
+        CanalConnector connector = CanalConnectors
+                .newSingleConnector(new InetSocketAddress("master-haixue", 11111), "test333", "", "");
+        doConnect(connector,"test333.user");
     }
 
     /**
-     * zk server ha架构 使用memory+zk保证 canal server的高可用
-     * 使用spring/default-instance.xml 先写内存，再写zk
-     * canal server相关信息存储到zk上，当有一个canal server failover，另一个热备将启用
-     * canal client也可以做ha 当多个client连接到集群中，当其中某一个client failover，另一个client会切换
-     * (切换的时间  公式= session过期时间默认为zookeeper配置文件中定义的tickTime的20倍，如果不改动zookeeper配置，那默认就是40秒)
+     * zk server ha架构 使用memory+zk保证 canal server的高可用 使用spring/default-instance.xml 先写内存，再写zk canal
+     * server相关信息存储到zk上，当有一个canal server failover，另一个热备将启用 canal client也可以做ha
+     * 当多个client连接到集群中，当其中某一个client failover，另一个client会切换 (切换的时间 公式=
+     * session过期时间默认为zookeeper配置文件中定义的tickTime的20倍，如果不改动zookeeper配置，那默认就是40秒)
      */
     @Test
     public void zkClusterTest() {
-        CanalConnector connector = CanalConnectors.newClusterConnector("master-haixue:2181", "example", "", "");
-        doConnect(connector);
+        CanalConnector connector =
+                CanalConnectors.newClusterConnector("master-haixue:2181", "example", "", "");
+        doConnect(connector,"canal\\.canal.*");//.*\..*
     }
 
-    private void doConnect(CanalConnector connector) {
+    private void doConnect(CanalConnector connector,String sub) {
         try {
             connector.connect();
-            connector.subscribe(".*\\..*");
-            connector.rollback();
+            connector.subscribe(sub);
+//            connector.rollback();
             while (true) {
                 Message message = connector.getWithoutAck(1000); // 获取指定数量的数据
                 long batchId = message.getId();
@@ -68,7 +74,9 @@ public class CanalStandClient {
 
     private void printEntry(List<CanalEntry.Entry> entrys) {
         for (CanalEntry.Entry entry : entrys) {
-            if (entry.getEntryType() == CanalEntry.EntryType.TRANSACTIONBEGIN || entry.getEntryType() == CanalEntry.EntryType.TRANSACTIONEND) {
+            if (entry.getEntryType() == CanalEntry.EntryType.TRANSACTIONBEGIN
+                    || entry.getEntryType() == CanalEntry.EntryType.TRANSACTIONEND) {
+                System.out.println("type:transtraction.");
                 continue;
             }
 
@@ -76,20 +84,20 @@ public class CanalStandClient {
             try {
                 rowChage = CanalEntry.RowChange.parseFrom(entry.getStoreValue());
             } catch (Exception e) {
-                throw new RuntimeException("ERROR ## parser of eromanga-event has an error , data:" + entry.toString(),
-                        e);
+                throw new RuntimeException(
+                        "ERROR ## parser of eromanga-event has an error , data:" + entry.toString(), e);
             }
 
             CanalEntry.EventType eventType = rowChage.getEventType();
-            System.out.println(String.format("================&gt; binlog[%s:%s] , name[%s,%s] , eventType : %s",
-                    entry.getHeader().getLogfileName(), entry.getHeader().getLogfileOffset(),
-                    entry.getHeader().getSchemaName(), entry.getHeader().getTableName(),
-                    eventType));
+            System.out.println(
+                    String.format("================&gt; binlog[%s:%s] , name[%s,%s] , eventType : %s",
+                            entry.getHeader().getLogfileName(), entry.getHeader().getLogfileOffset(),
+                            entry.getHeader().getSchemaName(), entry.getHeader().getTableName(), eventType));
             String tName = entry.getHeader().getTableName();
             for (CanalEntry.RowData rowData : rowChage.getRowDatasList()) {
-//                if (eventType == CanalEntry.EventType.DELETE) {
-//                    printColumn(rowData.getBeforeColumnsList());
-//                } else
+                // if (eventType == CanalEntry.EventType.DELETE) {
+                // printColumn(rowData.getBeforeColumnsList());
+                // } else
                 if (eventType == CanalEntry.EventType.INSERT) {
                     printColumn(rowData.getAfterColumnsList());
                 } else if (eventType == CanalEntry.EventType.UPDATE) {
@@ -114,12 +122,12 @@ public class CanalStandClient {
         }
     }
 
-    private void processOgr(CanalEntry.EventType eventType, CanalEntry.RowData rowData) {
-    }
+    private void processOgr(CanalEntry.EventType eventType, CanalEntry.RowData rowData) {}
 
     private void printColumn(List<CanalEntry.Column> columns) {
         for (CanalEntry.Column column : columns) {
-            System.out.print(column.getName() + " : " + column.getValue() + "    update=" + column.getUpdated() + " ");
+            System.out.print(
+                    column.getName() + " : " + column.getValue() + "    update=" + column.getUpdated() + " ");
         }
         System.out.println();
     }
