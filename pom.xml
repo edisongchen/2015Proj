@@ -35,7 +35,7 @@
         <jackson.version>2.5.4</jackson.version>
         <fastjson.version>1.2.28</fastjson.version>
         <xstream.version>1.4.7</xstream.version>
-        <guava.version>18.0</guava.version>
+        <guava.version>19.0</guava.version>
         <joda-time.version>2.3</joda-time.version>
         <dozer.version>5.5.1</dozer.version>
         <junit.version>4.11</junit.version>
